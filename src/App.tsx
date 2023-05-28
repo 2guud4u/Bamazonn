@@ -6,7 +6,7 @@ import HelloWorldScene from './scenes/HelloWorldScene'
 
 const handleClick = () => {
   const scene = phaserGame.scene.keys.helloworld as HelloWorldScene
-  scene.createEmitter()
+  
 }
 
 function App() {
