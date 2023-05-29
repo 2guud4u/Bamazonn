@@ -32,18 +32,20 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.physics.world.enable(this.player.Sprays);
 
     this.physics.add.collider(this.player.Sprays, this.mosquito , this.handleCollision as any, undefined, this);
-
+    this.physics.add.collider(this.player, this.mosquito , this.handlePlayerCollision as any, undefined, this);
      
   }
   update() {
-
-    this.player.update();
+    if(this.player !== undefined){
+      this.player.update();
+    }
+    
     
     
     this.mosquito.update(this.player.getPosition());
     
     // console.log('Numbers of sprites', this.entitiesGroup.getLength())
-     console.log('Numbers of shots', this.player.Sprays.getLength())
+    //console.log('Numbers of shots', this.player.Sprays.getLength())
 
  
 
@@ -55,6 +57,16 @@ export default class HelloWorldScene extends Phaser.Scene {
     console.log(mosquito);
     mosquito.damaged();
     spray.destroy();
+  
+  }
+  private handlePlayerCollision(player:any, mosquito:any) {
+    console.log('Collision');
+    console.log(mosquito);
+    console.log(player.health);
+    const hitDirection = player.x - mosquito.x;
+    console.log(mosquito.attackDamage)
+    player.damaged(hitDirection, mosquito.attackDamage);
+    
   
   }
   

@@ -2,12 +2,13 @@ import Phaser from 'phaser';
 
 export default class Mosquito extends Phaser.Physics.Arcade.Sprite {
     private health = 8;
+    public attackDamage = 5;
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
         super(scene, x, y, texture);
         this.scene.physics.add.existing(this);
         this.scene.add.existing(this);
         
-        this.setBounce(0.2);
+        this.setBounce(10);
         this.setCollideWorldBounds(true); 
         (this.body as Phaser.Physics.Arcade.Body).allowGravity = false;
         this.setScale(.5);
@@ -41,10 +42,16 @@ export default class Mosquito extends Phaser.Physics.Arcade.Sprite {
     
     }
     public damaged(){
-        this.health--;
-        if(this.health <= 0){
+        if(this.health <= 1){
             this.destroy();
+            return
         }
+            this.health--;
+            console.log(this.health);
+            this.x = this.x + 20*(Math.sign(this.body.velocity.x));
+            
+        
+        
     }
     destroy() {
         // Additional cleanup or custom logic before destroying the sprite

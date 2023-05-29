@@ -9,12 +9,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   private timeSinceLastFire: number = 0;
   private spriteX = 1;
   private spriteY = 2;
-
+  private pointer!: Phaser.Input.Pointer;
+    public health = 100;
   constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
     super(scene, x, y, texture);
     scene.physics.world.enable(this);
     scene.add.existing(this);
-    this.setBounce(0.2);
+    this.setBounce(.2);
     this.setCollideWorldBounds(true);
 
     this.wKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -35,12 +36,19 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     // Update the size of the physics body to match the new scale
     this.body.setSize(newWidth, newHeight);
     scene.input.mouse.disableContextMenu();
-  }
+    this.pointer = this.scene.input.activePointer; 
+}
 
   update() {
+    if (!this || !this.active) {
+        return;
+      }
     const playerSpeed = 200;
     const playerJumpSpeed = 200;
-    const pointer = this.scene.input.activePointer;
+    
+   
+    
+    
 
     if (this.aKey.isDown) {
       this.setVelocityX(-playerSpeed);
@@ -54,8 +62,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this.setVelocityY(-playerJumpSpeed);
     }
 
-    if (pointer.leftButtonDown()) {
-      this.fireSpray(this.timeSinceLastFire, pointer.position);
+    if (this.pointer.leftButtonDown()) {
+      this.fireSpray(this.timeSinceLastFire, this.pointer.position);
     }
 
     this.timeSinceLastFire += this.scene.sys.game.loop.delta;
@@ -65,6 +73,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   public getPosition(): { x: number; y: number } {
     return { x: this.x, y: this.y };
   }
+  public damaged(movement: number, damage: number){
+    if(this.health <= 1){
+        this.destroy();
+        return
+    }
+    this.health -= damage;
+    console.log(this.health);
+    this.x = this.x + 20*(Math.sign(movement));
+}
 
   private fireSpray(timeSinceLastFire: number, shootPos: { x: number; y: number }) {
     if (timeSinceLastFire > 1000) {
