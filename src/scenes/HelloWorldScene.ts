@@ -1,11 +1,12 @@
 import Phaser from 'phaser'
 import Player from '../entities/player';
 import Mosquito from '../entities/mosquito';
-import Spray from '../tools/ranged/projectile';
+import Projectile from '../tools/ranged/projectile';
 export default class HelloWorldScene extends Phaser.Scene {
   
   private player!: Player;
   private mosquito!: Mosquito;
+  
   private mobs!: Phaser.Physics.Arcade.Group;
   constructor() {
     super('helloworld')
@@ -20,6 +21,7 @@ export default class HelloWorldScene extends Phaser.Scene {
 
   create() {
     this.mosquito = new Mosquito(this, 400, 450, 'player-key');
+    const mosquito2 = new Mosquito(this, 400, 600, 'player-key');
     // Create your square player sprite and initialize its properties
     this.player = new Player(this, 100, 450, 'player-key');
     this.mobs = this.physics.add.group(
@@ -34,7 +36,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.add.existing(this.mosquito); 
     // Enable physics for entitiesGroup and player.Spraysd
     this.mobs.add(this.mosquito);
- 
+    this.mobs.add(mosquito2);
     this.physics.world.enable(this.player.Projectiles);
 
     this.physics.add.collider(this.player.Projectiles, this.mobs , this.handleCollision as any, undefined, this);
@@ -47,7 +49,9 @@ export default class HelloWorldScene extends Phaser.Scene {
     }
     
     
-    
+    this.mobs.getChildren().forEach((mosquito) => {
+      mosquito.update(this.player.getPosition());
+    });
     this.mosquito.update(this.player.getPosition());
     
     // console.log('Numbers of sprites', this.entitiesGroup.getLength())
@@ -61,10 +65,11 @@ export default class HelloWorldScene extends Phaser.Scene {
   private handleCollision( spray:any, mosquito:Mosquito) {
     console.log('Collision');
     console.log(mosquito);
-    mosquito.damaged(4);
+    mosquito.damaged(spray.getDamage());
     spray.destroy();
   
   }
+
   private handlePlayerCollision(player:any, mosquito:any) {
     console.log('Collision');
     console.log(mosquito);
