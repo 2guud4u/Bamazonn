@@ -10,7 +10,7 @@ export default class Projectile extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this);
     (this.body as Phaser.Physics.Arcade.Body).allowGravity = true;
     //this.setScale(.4);
-    this.scene.physics.add.existing(this)
+    this.scene.physics.add.existing(this);
     this.body.onCollide = true;
     this.ProjectileSpeed = projectileSpeed;
     this.Damage = damage;
@@ -21,7 +21,7 @@ export default class Projectile extends Phaser.Physics.Arcade.Sprite {
     const angle = Phaser.Math.Angle.Between(this.x, this.y, this.ProjectileDirection.x, this.ProjectileDirection.y);
     
     // Set the velocity of the Projectile based on the angle
-    
+    console.log("angling")
     this.setVelocityX(Math.cos(angle) * this.ProjectileSpeed);
     this.setVelocityY(Math.sin(angle) * this.ProjectileSpeed);
 }

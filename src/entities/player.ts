@@ -127,10 +127,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
      if (timeSinceLastFire > 1000) {
       const Projectile1 = new BugSpray(this.scene,this.x, this.y, 'Projectile-key');
       const Projectile2 = new BugSpray(this.scene,this.x, this.y-20, 'Projectile-key');
+      const Projectile3 = new BugSpray(this.scene,this.x, this.y+20, 'Projectile-key');
       this.Projectiles.add(Projectile1);
       this.Projectiles.add(Projectile2);
+      this.Projectiles.add(Projectile3);
       Projectile1.setProjectileDirection(shootPos);
       Projectile2.setProjectileDirection(shootPos);
+      Projectile3.setProjectileDirection(shootPos);
       this.timeSinceLastFire = 0;
     }
   }
