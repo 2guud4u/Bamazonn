@@ -41,12 +41,12 @@ export default class Mosquito extends Phaser.Physics.Arcade.Sprite {
 
     
     }
-    public damaged(){
+    public damaged(damage: number){
         if(this.health <= 1){
             this.destroy();
             return
         }
-            this.health--;
+            this.health -= damage;
             console.log(this.health);
             this.x = this.x + 20*(Math.sign(this.body.velocity.x));
             
