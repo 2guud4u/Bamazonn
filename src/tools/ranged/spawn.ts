@@ -2,6 +2,7 @@ import Phaser from 'phaser'
 import BugSpray from '../ranged/BugSpray'
 import BugASalt from '../ranged/BugASalt'
 import { Weapon } from '../../entities/States/Weapon'
+//handle projectile spawning logic
 class ProjectileInfo{
     public Projectiles: Phaser.Physics.Arcade.Group;
     public scene: Phaser.Scene;
@@ -22,7 +23,7 @@ class ProjectileInfo{
             this.shootFromPos = shootFromPos;
         }
 }
-function fireProjectile(
+export default function fireProjectile(
     equipment: Weapon,
     Projectiles: Phaser.Physics.Arcade.Group,
     scene: Phaser.Scene,
@@ -43,7 +44,9 @@ function fireProjectile(
     }
 }
 function fireBugSpray(info: ProjectileInfo) {
-    if (info.timeSinceLastFire - info.scene.sys.game.loop.delta> 1000) {
+    //fire rate
+    const fireRate = 1000;
+    if (info.scene.time.now- info.timeSinceLastFire  > fireRate) {
         const Projectile1 = new BugSpray(info.scene, info.shootFromPos.x, info.shootFromPos.y, 'Projectile-key');
         const Projectile2 = new BugSpray(info.scene, info.shootFromPos.x, info.shootFromPos.y - 20, 'Projectile-key');
         const Projectile3 = new BugSpray(info.scene, info.shootFromPos.x, info.shootFromPos.y + 20, 'Projectile-key');
@@ -60,7 +63,9 @@ function fireBugSpray(info: ProjectileInfo) {
     
 }
 function fireBugASalt(info: ProjectileInfo) {
-    if (info.timeSinceLastFire - info.scene.sys.game.loop.delta > 1000) {
+    //fire rate
+    const fireRate = 500;
+    if (info.scene.time.now- info.timeSinceLastFire  > fireRate) {
 
         const Projectile1 = new BugASalt(info.scene, info.shootFromPos.x, info.shootFromPos.y, 'Projectile-key');
 
@@ -70,8 +75,3 @@ function fireBugASalt(info: ProjectileInfo) {
 
     }
 }
-module.exports = {
-    fireProjectile,
-    fireBugSpray,
-    fireBugASalt
-};

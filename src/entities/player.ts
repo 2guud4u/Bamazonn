@@ -3,6 +3,7 @@ import Projectile from '../tools/ranged/projectile';
 import BugSpray from '../tools/ranged/BugSpray';
 import {Weapon} from './States/Weapon';
 import BugASalt from '../tools/ranged/BugASalt';
+import fireProjectile from '../tools/ranged/spawn';
 
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
@@ -78,12 +79,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     
     //player shooting
     if (this.pointer.leftButtonDown()) {
-      this.fireProjectile(this.timeSinceLastFire, this.pointer.position);
+      //fireProjectile(this.timeSinceLastFire, this.pointer.position);
+      
+      fireProjectile(this.equipment, this.Projectiles, this.scene, this.timeSinceLastFire, this.pointer.position, this.getPosition());
+      this.timeSinceLastFire = this.scene.time.now;
+
     }
 
     //fire rate logic
-    this.timeSinceLastFire += this.scene.sys.game.loop.delta;
+    
+    
     this.timeSinceLastSwap += this.scene.sys.game.loop.delta;
+
   }
 
   public getPosition(): { x: number; y: number } {
@@ -99,18 +106,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.x = this.x + 20*(Math.sign(movement));
 }
 
-  private fireProjectile(timeSinceLastFire: number, shootPos: { x: number; y: number }) {
-    switch(this.equipment){
-      case Weapon.BugSpray:
-        this.fireBugSpray(timeSinceLastFire, shootPos);
-        break;
-      case Weapon.BugASalt:
-        this.fireBugASalt(timeSinceLastFire, shootPos);
-        break;
-      default:
-        break;
-    } 
-  }
+  // private fireProjectile(timeSinceLastFire: number, shootPos: { x: number; y: number }) {
+  //   switch(this.equipment){
+  //     case Weapon.BugSpray:
+  //       this.fireBugSpray(timeSinceLastFire, shootPos);
+  //       break;
+  //     case Weapon.BugASalt:
+  //       this.fireBugASalt(timeSinceLastFire, shootPos);
+  //       break;
+  //     default:
+  //       break;
+  //   } 
+  // }
   private changeEquipment(tool: any, timeSinceLastSwap: number){
     if(timeSinceLastSwap > 1000){
       if(tool === Weapon.Fist){

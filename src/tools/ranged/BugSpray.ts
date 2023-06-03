@@ -36,11 +36,11 @@ export default class BugSpray extends Projectile{
 
             }
              if(this.stationaryTime > 100){
-                console.log(this.stationaryTime)
+                
                 this.destroy();
             }
         }
-        console.log(this.stationaryTime) 
+        
         this.stationaryTime ++;
     } 
 }
