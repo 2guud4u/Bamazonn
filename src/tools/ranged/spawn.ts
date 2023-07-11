@@ -30,18 +30,19 @@ export default function fireProjectile(
     timeSinceLastFire: number,
     shootToPos: { x: number; y: number },
     shootFromPos: { x: number; y: number }) {
-
+    let shot = false;
     let projectileInfo = new ProjectileInfo(Projectiles, scene, timeSinceLastFire, shootToPos, shootFromPos);            
     switch (equipment) {
         case Weapon.BugSpray:
-            fireBugSpray(projectileInfo);
+            shot = fireBugSpray(projectileInfo);
             break;
         case Weapon.BugASalt:
-            fireBugASalt(projectileInfo);
+            shot = fireBugASalt(projectileInfo);
             break;
         default:
             break;
     }
+    return shot;
 }
 function fireBugSpray(info: ProjectileInfo) {
     //fire rate
@@ -56,7 +57,10 @@ function fireBugSpray(info: ProjectileInfo) {
         Projectile1.setProjectileDirection(info.shootToPos);
         Projectile2.setProjectileDirection(info.shootToPos);
         Projectile3.setProjectileDirection(info.shootToPos);
+        return true;
         
+    } else {
+        return false;
     }
    
     
@@ -72,6 +76,8 @@ function fireBugASalt(info: ProjectileInfo) {
         info.Projectiles.add(Projectile1);
 
         Projectile1.setProjectileDirection(info.shootToPos);
-
+        return true;
+    } else {
+        return false;
     }
 }

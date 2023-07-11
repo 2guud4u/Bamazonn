@@ -49,7 +49,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     // Update the size of the physics body to match the new scale
     this.body.setSize(newWidth, newHeight-30);
     scene.input.mouse.disableContextMenu();
-    this.pointer = this.scene.input.activePointer; 
+    this.pointer = this.scene.input.mousePointer; 
 }
 
   update() {
@@ -79,10 +79,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     
     //player shooting
     if (this.pointer.leftButtonDown()) {
-      //fireProjectile(this.timeSinceLastFire, this.pointer.position);
+      console.log("left button down");
       
-      fireProjectile(this.equipment, this.Projectiles, this.scene, this.timeSinceLastFire, this.pointer.position, this.getPosition());
-      this.timeSinceLastFire = this.scene.time.now;
+      if(fireProjectile(this.equipment, this.Projectiles, this.scene, this.timeSinceLastFire, this.pointer.position, this.getPosition())){
+       this.timeSinceLastFire = this.scene.time.now; 
+      }
+      
 
     }
 
@@ -130,30 +132,5 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this.timeSinceLastSwap = 0;
     }
   }
-  private fireBugSpray(timeSinceLastFire: number, shootPos: { x: number; y: number }) {
-     if (timeSinceLastFire > 1000) {
-      const Projectile1 = new BugSpray(this.scene,this.x, this.y, 'Projectile-key');
-      const Projectile2 = new BugSpray(this.scene,this.x, this.y-20, 'Projectile-key');
-      const Projectile3 = new BugSpray(this.scene,this.x, this.y+20, 'Projectile-key');
-      this.Projectiles.add(Projectile1);
-      this.Projectiles.add(Projectile2);
-      this.Projectiles.add(Projectile3);
-      Projectile1.setProjectileDirection(shootPos);
-      Projectile2.setProjectileDirection(shootPos);
-      Projectile3.setProjectileDirection(shootPos);
-      this.timeSinceLastFire = 0;
-    }
-  }
-  private fireBugASalt(timeSinceLastFire: number, shootPos: { x: number; y: number }) {
-    if (timeSinceLastFire > 1000) {
-      
-      const Projectile1 = new BugASalt(this.scene,this.x, this.y, 'Projectile-key');
-      
-      this.Projectiles.add(Projectile1);
-      
-      Projectile1.setProjectileDirection(shootPos);
-      
-      this.timeSinceLastFire = 0;
-    }
-  }
+
 }

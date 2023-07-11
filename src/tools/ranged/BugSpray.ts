@@ -5,7 +5,7 @@ export default class BugSpray extends Projectile{
     private growthRate: number = 0.001;
     private stationaryTime: number = 0;
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
-        super(scene, x, y, texture, 400, 2);
+        super(scene, x, y, texture, 400, 1);
         this.setScale(.4);
        
         
