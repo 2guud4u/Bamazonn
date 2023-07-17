@@ -34,7 +34,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     //const bear = new Bear(this, 800, 600, 'player-key');
     // Create your square player sprite and initialize its properties
     this.player = new Player(this, 100, 450, 'player-key');
-    this.playerContainer = new PlayerContainer(this, 100, 450, this.player);
+    this.playerContainer = new PlayerContainer(this, 100, 450);
     this.mobs = this.physics.add.group(
       {
         classType: Mob,
@@ -51,7 +51,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     
     
     // spawnBear(this, 800, 600, this.mobs);
-     spawnMosquito(this, 100, 100, this.mobs);
+     //spawnMosquito(this, 100, 100, this.mobs);
     
    
      
