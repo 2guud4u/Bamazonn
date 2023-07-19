@@ -70,7 +70,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this.setVelocityY(-this.playerJumpSpeed);
     }
     //player equipment control
-    if (this.qKey.isDown){
+    if (Phaser.Input.Keyboard.JustDown(this.qKey)){
       console.log("Q Pressed")
       this.changeEquipment(this.equipment, this.timeSinceLastSwap)
     }
@@ -121,7 +121,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   //   } 
   // }
   private changeEquipment(tool: any, timeSinceLastSwap: number){
-    if(timeSinceLastSwap > 1000){
+   
       if(tool === Weapon.Fist){
         this.equipment = Weapon.BugSpray;
       }
@@ -129,8 +129,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.equipment = Weapon.BugASalt;
       }
       
-      this.timeSinceLastSwap = 0;
-    }
   }
 
 }

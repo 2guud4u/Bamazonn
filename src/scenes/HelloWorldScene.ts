@@ -21,19 +21,25 @@ export default class HelloWorldScene extends Phaser.Scene {
 
   preload() {
     
-
+    this.load.tilemapTiledJSON('map', 'assets/tilemaps/First.json');
+    this.load.image('tiles', 'assets/tilesets/platformPack_tilesheet.png');
     this.load.image('logo', 'assets/logo192.png')
     this.load.image('red', 'assets/logo192.png')
   }
 
   create() {
-    
+    //make map
+    const map = this.make.tilemap({ key: 'map' });
+     const tileset = map.addTilesetImage('tileset', 'tiles');
+     const platforms = map.createLayer('top', tileset, 100,250);
+    platforms.setCollisionByExclusion([-1], true);
+
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     
     
     //const bear = new Bear(this, 800, 600, 'player-key');
     // Create your square player sprite and initialize its properties
-    this.player = new Player(this, 100, 450, 'player-key');
+    //this.player = new Player(this, 100, 450, 'player-key');
     this.playerContainer = new PlayerContainer(this, 100, 450);
     this.mobs = this.physics.add.group(
       {
@@ -58,9 +64,9 @@ export default class HelloWorldScene extends Phaser.Scene {
  
     
     
-
-    this.physics.add.collider(this.player.Projectiles, this.mobs , this.handleCollision as any, undefined, this);
-    this.physics.add.collider(this.player, this.mobs , this.handlePlayerCollision as any, undefined, this);
+    this.physics.add.collider(this.playerContainer, platforms);
+    //this.physics.add.collider(this.player.Projectiles, this.mobs , this.handleCollision as any, undefined, this);
+    //this.physics.add.collider(this.player, this.mobs , this.handlePlayerCollision as any, undefined, this);
     
 
   }
@@ -68,11 +74,11 @@ export default class HelloWorldScene extends Phaser.Scene {
     if(this.spacebar.isDown){
       this.debug = !this.debug;
     }
-
-    if(this.player !== undefined){
-      this.player.update();
-      this.playerContainer.update();
-    }
+    this.playerContainer.update();
+    // if(this.player !== undefined){
+    //   this.player.update();
+    //   this.playerContainer.update();
+    // }
     
     if(!this.debug){
       this.mobs.getChildren().forEach((mob) => {

@@ -1,49 +1,103 @@
 import Phaser from "phaser";
 import Player from "./player";
+import {Weapon} from './States/Weapon';
+import Projectile from '../tools/ranged/projectile';
+import fireProjectile from '../tools/ranged/spawn';
 
 export default class PlayerContainer extends Phaser.GameObjects.Container {
-    private graphics: Phaser.GameObjects.Graphics;
+    private pointer!: Phaser.Input.Pointer;
     private box: Phaser.GameObjects.Sprite;
     body!: Phaser.Physics.Arcade.Body;
     private cursors: any;
+    private speed: number = 300;
+    private jumpheight: number = 200;
+    private equipment: number = 0;
+    private hotbar = [Weapon.Fist, Weapon.BugSpray, Weapon.BugASalt];
+    private timeSinceLastFire: number = 0;
+    private Projectiles: Phaser.Physics.Arcade.Group;
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y);
-        
-        scene.physics.world.enable(this);
+
+        this.scene = scene;
         scene.add.existing(this);
-        this.graphics = scene.add.graphics();
-        this.box = this.scene.add.sprite( x, y, 'player-key');
+        scene.physics.world.enable(this);
+        
+
+        
+        
         this.body.setCollideWorldBounds(true);
+
+        //set up player controls
         this.cursors = this.scene.input.keyboard.addKeys({
           up: Phaser.Input.Keyboard.KeyCodes.W,
           left: Phaser.Input.Keyboard.KeyCodes.A,
-          right: Phaser.Input.Keyboard.KeyCodes.D
+          right: Phaser.Input.Keyboard.KeyCodes.D,
+          swap: Phaser.Input.Keyboard.KeyCodes.Q
         });
+        this.pointer = this.scene.input.mousePointer; 
+        
+
+        //add player to container
+        this.box = this.scene.add.sprite( 0, 0, 'player-key');
         this.add(this.box);
+
+        this.Projectiles = scene.physics.add.group({
+          classType: Projectile,
+          runChildUpdate: true,
+        });
     }
     update() {
-        
-      if (this.cursors.left.isDown)
+      const { left, right, up, swap } = this.cursors;
+      const pointer = this.pointer;
+      // player movement
+      if (left.isDown)
       {
-          this.body.setVelocityX(-300);
+          this.body.setVelocityX(-this.speed);
       }
-      else if (this.cursors.right.isDown){
-          this.body.setVelocityX(300);
+      else if (right.isDown){
+          this.body.setVelocityX(this.speed);
       }
       else {
         this.body.setVelocityX(0);
       }
-        // Set the line style for the outline
-        const lineColor = 0xff0000;
-        const lineWidth = 2;
-        this.graphics.clear();
-        this.graphics.lineStyle(lineWidth, lineColor);
-    
-        // Draw a rectangle around the container
-        const containerWidth = this.getBounds().width;
-        const containerHeight = this.getBounds().height;
-        const containerX = this.x - containerWidth * this.originX;
-        const containerY = this.y - containerHeight * this.originY;
-        this.graphics.strokeRect(containerX, containerY, containerWidth, containerHeight);
+      if(this.body.blocked.down && up.isDown){
+        this.body.setVelocityY(-this.jumpheight);
       }
-}    
+      
+      // player weapon functionality
+      if(Phaser.Input.Keyboard.JustDown(swap)){
+        this.changeEquipment()
+      }
+      if (pointer.leftButtonDown()) {
+        
+        
+        if(fireProjectile(this.hotbar[this.equipment], this.Projectiles, this.scene, this.timeSinceLastFire, this.pointer.position, this.getPosition())){
+         this.timeSinceLastFire = this.scene.time.now; 
+        }
+        
+  
+      }
+  
+      //fire rate logic
+      
+      
+      
+    }
+
+
+    private changeEquipment(){
+      
+      this.equipment = (this.equipment + 1) % this.hotbar.length;
+      console.log(this.hotbar[this.equipment]);
+      
+    }
+
+    public getPosition(): { x: number; y: number } {
+      return { x: this.x, y: this.y };
+    }
+    
+    private mouseClicked(){
+      console.log("mouse clicked");
+    }
+
+}
