@@ -13,8 +13,8 @@ export default class Mosquito extends Mob {
         
     }
 
-    update(playerPosition: {x: number, y: number}){
-        
+    update(){
+        let playerPosition = this.getPlayerPos();
         const moveSpeed = 100; // Adjust the movement speed as desired
 
         const targetX = playerPosition.x;

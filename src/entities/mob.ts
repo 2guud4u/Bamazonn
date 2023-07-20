@@ -3,6 +3,7 @@ import phaser from 'phaser';
 export default class Mob extends phaser.Physics.Arcade.Sprite {
     private health!: number;
     public attackDamage!: number;
+    private playerPos!: {x: number, y: number};
     constructor(scene: phaser.Scene, x: number, y: number, texture: string, health: number, attackDamage: number) { 
         super(scene, x, y, texture);
         this.scene.physics.add.existing(this);
@@ -45,5 +46,10 @@ export default class Mob extends phaser.Physics.Arcade.Sprite {
     public getAttackDamage(){
         return this.attackDamage;
     }
-    
+    public updatePlayerPos(playerPos: {x: number, y: number}){
+        this.playerPos = playerPos;
+    }
+    public getPlayerPos(){
+        return this.playerPos;
+    }
 }

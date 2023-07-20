@@ -4,7 +4,7 @@ import Mosquito from '../entities/mosquito';
 import Projectile from '../tools/ranged/projectile';
 import Bear from '../entities/bear';
 import Mob from '../entities/mob';
-import {spawnBear, spawnMosquito} from '../entities/MobFactory';
+import {spawnBear, spawnMosquito, moveMobs} from '../entities/MobFactory';
 import PlayerContainer from '../entities/playerContainer';
 
 export default class HelloWorldScene extends Phaser.Scene {
@@ -14,7 +14,7 @@ export default class HelloWorldScene extends Phaser.Scene {
   private debug: boolean = false;
   private mobs!: Phaser.Physics.Arcade.Group;
   private playerContainer!: PlayerContainer;
-  private container!: Phaser.GameObjects.Container;
+  public playerPos!: {x: number, y: number};
   constructor() {
     super('helloworld')
   }
@@ -31,7 +31,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     //make map
     const map = this.make.tilemap({ key: 'map' });
      const tileset = map.addTilesetImage('tileset', 'tiles');
-     const platforms = map.createLayer('top', tileset, 100,250);
+     const platforms = map.createLayer('top', tileset, 10,250);
     platforms.setCollisionByExclusion([-1], true);
 
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -49,15 +49,14 @@ export default class HelloWorldScene extends Phaser.Scene {
       
     );
     
-    const image1 = this.add.image(0, -30, 'mushroom');
-    this.container = this.add.container(100, 100, [ image1 ]);
+    
 
   
     
     
     
-    // spawnBear(this, 800, 600, this.mobs);
-     //spawnMosquito(this, 100, 100, this.mobs);
+    //spawnBear(this, 800, 600, this.mobs);
+     spawnMosquito(this, 100, 100, this.mobs);
     
    
      
@@ -65,7 +64,8 @@ export default class HelloWorldScene extends Phaser.Scene {
     
     
     this.physics.add.collider(this.playerContainer, platforms);
-    //this.physics.add.collider(this.player.Projectiles, this.mobs , this.handleCollision as any, undefined, this);
+    this.physics.add.collider(this.mobs, platforms);
+    this.physics.add.collider(this.playerContainer.Projectiles, this.mobs , this.handleCollision as any, undefined, this);
     //this.physics.add.collider(this.player, this.mobs , this.handlePlayerCollision as any, undefined, this);
     
 
@@ -80,10 +80,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     //   this.playerContainer.update();
     // }
     
-    if(!this.debug){
-      this.mobs.getChildren().forEach((mob) => {
-      mob.update(this.player.getPosition());
-    });
+    moveMobs(this.playerContainer, this.mobs);
 
     }
     
@@ -98,7 +95,7 @@ export default class HelloWorldScene extends Phaser.Scene {
 
   
 
-  }
+  
   private handleCollision( spray:any, mosquito:Mosquito) {
     
     console.log(mosquito);

@@ -14,7 +14,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     private equipment: number = 0;
     private hotbar = [Weapon.Fist, Weapon.BugSpray, Weapon.BugASalt];
     private timeSinceLastFire: number = 0;
-    private Projectiles: Phaser.Physics.Arcade.Group;
+    public Projectiles: Phaser.Physics.Arcade.Group;
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y);
 
@@ -81,6 +81,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
       //fire rate logic
       
       
+      //update plyer pos
       
     }
 
