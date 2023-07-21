@@ -3,6 +3,7 @@ import Player from "./player";
 import {Weapon} from './States/Weapon';
 import Projectile from '../tools/ranged/projectile';
 import fireProjectile from '../tools/ranged/spawn';
+import CandyCane from '../tools/melee/candyCane';
 
 export default class PlayerContainer extends Phaser.GameObjects.Container {
     private pointer!: Phaser.Input.Pointer;
@@ -12,9 +13,11 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     private speed: number = 300;
     private jumpheight: number = 200;
     private equipment: number = 0;
-    private hotbar = [Weapon.Fist, Weapon.BugSpray, Weapon.BugASalt];
+    private hotbar = [Weapon.Fist, Weapon.BugSpray, Weapon.BugASalt, Weapon.CandyCane];
     private timeSinceLastFire: number = 0;
     public Projectiles: Phaser.Physics.Arcade.Group;
+    private cane: CandyCane;
+    private aimAngle: number = 0;
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y);
 
@@ -45,6 +48,13 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
           classType: Projectile,
           runChildUpdate: true,
         });
+        this.scene.input.on(Phaser.Input.Events.POINTER_MOVE, function(pointer:Phaser.Input.Pointer){
+          console.log('test')
+        })
+        //add candy cane
+        this.cane = new CandyCane(this.scene, 20, 0, 'candy-cane');
+        
+        this.add(this.cane);
     }
     update() {
       const { left, right, up, swap } = this.cursors;
@@ -77,12 +87,13 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         
   
       }
-  
+      this.aimAngle = (Phaser.Math.Angle.Between(this.x, this.y, pointer.position.x, pointer.position.y) - Math.PI / 2);
+  this.cane.setRotation(this.aimAngle);
       //fire rate logic
       
       
       //update plyer pos
-      
+      this.cane.setRotation(this.aimAngle);
     }
 
 
@@ -99,6 +110,9 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     
     private mouseClicked(){
       console.log("mouse clicked");
+    }
+    private getRotation(){
+      console.log("move")
     }
 
 }

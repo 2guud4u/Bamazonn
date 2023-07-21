@@ -55,8 +55,8 @@ export default class HelloWorldScene extends Phaser.Scene {
     
     
     
-    //spawnBear(this, 800, 600, this.mobs);
-     spawnMosquito(this, 100, 100, this.mobs);
+    spawnBear(this, 800, 600, this.mobs);
+     //spawnMosquito(this, 100, 100, this.mobs);
     
    
      
@@ -68,7 +68,9 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.physics.add.collider(this.playerContainer.Projectiles, this.mobs , this.handleCollision as any, undefined, this);
     //this.physics.add.collider(this.player, this.mobs , this.handlePlayerCollision as any, undefined, this);
     
-
+    this.input.on(Phaser.Input.Events.POINTER_MOVE, function(pointer:Phaser.Input.Pointer){
+      console.log('test')
+    })
   }
   update() {
     if(this.spacebar.isDown){

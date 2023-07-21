@@ -4,10 +4,7 @@ import './App.css'
 import phaserGame from './PhaserGame'
 import HelloWorldScene from './scenes/HelloWorldScene'
 
-const handleClick = () => {
-  const scene = phaserGame.scene.keys.helloworld as HelloWorldScene
-  
-}
+
 
 function App() {
   return (

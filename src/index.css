@@ -12,4 +12,5 @@ code {
 
 canvas {
   display: block;
+  z-index: 100;
 }
