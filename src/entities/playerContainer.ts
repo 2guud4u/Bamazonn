@@ -48,14 +48,19 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
           classType: Projectile,
           runChildUpdate: true,
         });
-        this.scene.input.on(Phaser.Input.Events.POINTER_MOVE, function(pointer:Phaser.Input.Pointer){
-          console.log('test')
-        })
+        
         //add candy cane
         this.cane = new CandyCane(this.scene, 20, 0, 'candy-cane');
         
         this.add(this.cane);
-    }
+
+        
+        this.scene.input.on('pointermove', (pointer:Phaser.Input.Pointer) => {
+          // Calculate the angle between the player and the world x/y of the mouse, and offset it by Pi/2
+          this.aimAngle = (Phaser.Math.Angle.Between(this.x, this.y, pointer.x, pointer.y) - Math.PI / 2);
+    
+        });
+      }
     update() {
       const { left, right, up, swap } = this.cursors;
       const pointer = this.pointer;
@@ -88,7 +93,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
   
       }
       this.aimAngle = (Phaser.Math.Angle.Between(this.x, this.y, pointer.position.x, pointer.position.y) - Math.PI / 2);
-  this.cane.setRotation(this.aimAngle);
+    this.cane.setRotation(this.aimAngle);
       //fire rate logic
       
       

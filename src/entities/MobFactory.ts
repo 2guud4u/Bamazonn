@@ -14,10 +14,12 @@ export function spawnMosquito(scene: Phaser.Scene, x:number, y:number, group: Ph
 }
 
 export function moveMobs(player: PlayerContainer, mobs: Phaser.Physics.Arcade.Group){
-    mobs.children.iterate((child) => {
-        if(child instanceof Mob){
-            child.updatePlayerPos(player);
-            child.update();
+    mobs.getChildren().forEach((child) => {
+        if(child){
+            if(child instanceof Mob ){
+                child.updatePlayerPos(player);
+                child.update();
+            }
         }
     });
 }
