@@ -68,6 +68,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.physics.add.collider(this.playerContainer.Projectiles, this.mobs , this.handleCollision as any, undefined, this);
     //this.physics.add.collider(this.player, this.mobs , this.handlePlayerCollision as any, undefined, this);
     this.physics.add.collider(this.playerContainer.cane, this.mobs);
+    this.physics.add.collider(this.playerContainer.cane.ball1, this.mobs, this.hello);
 
   }
   update() {
@@ -93,7 +94,9 @@ export default class HelloWorldScene extends Phaser.Scene {
 
  
 
-  
+  private hello(){
+    console.log("hello");
+  }
 
   
   private handleCollision( spray:any, mosquito:Mosquito) {
