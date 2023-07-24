@@ -15,6 +15,7 @@ export default class HelloWorldScene extends Phaser.Scene {
   private mobs!: Phaser.Physics.Arcade.Group;
   private playerContainer!: PlayerContainer;
   public playerPos!: {x: number, y: number};
+  
   constructor() {
     super('helloworld')
   }
@@ -23,8 +24,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     
     this.load.tilemapTiledJSON('map', 'assets/tilemaps/First.json');
     this.load.image('tiles', 'assets/tilesets/platformPack_tilesheet.png');
-    this.load.image('logo', 'assets/logo192.png')
-    this.load.image('red', 'assets/logo192.png')
+    
   }
 
   create() {
@@ -67,7 +67,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.physics.add.collider(this.mobs, platforms);
     this.physics.add.collider(this.playerContainer.Projectiles, this.mobs , this.handleCollision as any, undefined, this);
     //this.physics.add.collider(this.player, this.mobs , this.handlePlayerCollision as any, undefined, this);
-    
+    this.physics.add.collider(this.playerContainer.cane, this.mobs);
 
   }
   update() {

@@ -16,7 +16,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     private hotbar = [Weapon.Fist, Weapon.BugSpray, Weapon.BugASalt, Weapon.CandyCane];
     private timeSinceLastFire: number = 0;
     public Projectiles: Phaser.Physics.Arcade.Group;
-    private cane: CandyCane;
+    public cane: CandyCane;
     private aimAngle: number = 0;
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y);
@@ -24,7 +24,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         this.scene = scene;
         scene.add.existing(this);
         scene.physics.world.enable(this);
-        
+        //this.body.setAllowGravity(false);
 
         
         
@@ -53,13 +53,19 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         this.cane = new CandyCane(this.scene, 20, 0, 'candy-cane');
         
         this.add(this.cane);
-
+        this.cane.body.setAllowGravity(false);
         
         this.scene.input.on('pointermove', (pointer:Phaser.Input.Pointer) => {
           // Calculate the angle between the player and the world x/y of the mouse, and offset it by Pi/2
-          this.aimAngle = (Phaser.Math.Angle.Between(this.x, this.y, pointer.x, pointer.y) - Math.PI / 2);
-    
+          this.aimAngle = (Phaser.Math.Angle.Between(this.body.x, this.body.y, pointer.x, pointer.y) - Math.PI / 2);
+          
+          
         });
+        this.scene.input.on('pointerdown', (pointer:Phaser.Input.Pointer) => {
+          this.cane.stab(this.pointer.position, this.aimAngle, this.body.position);
+        });
+        //tween stuff
+        
       }
     update() {
       const { left, right, up, swap } = this.cursors;
@@ -88,12 +94,15 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         
         if(fireProjectile(this.hotbar[this.equipment], this.Projectiles, this.scene, this.timeSinceLastFire, this.pointer.position, this.getPosition())){
          this.timeSinceLastFire = this.scene.time.now; 
+         
         }
         
   
       }
-      this.aimAngle = (Phaser.Math.Angle.Between(this.x, this.y, pointer.position.x, pointer.position.y) - Math.PI / 2);
+      //this.aimAngle = (Phaser.Math.Angle.Between(this.x, this.y, pointer.position.x, pointer.position.y) - Math.PI / 2);
     this.cane.setRotation(this.aimAngle);
+
+    //this.cane.body.rotation=this.aimAngle;
       //fire rate logic
       
       
