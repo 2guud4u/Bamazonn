@@ -1,9 +1,9 @@
 import Phaser from 'phaser';
-import Projectile from '../tools/ranged/projectile';
-import BugSpray from '../tools/ranged/BugSpray';
-import {Weapon} from './States/Weapon';
-import BugASalt from '../tools/ranged/BugASalt';
-import fireProjectile from '../tools/ranged/spawn';
+import Projectile from '../tools/DamageTools/ranged/projectile/projectile';
+import BugSpray from '../tools/DamageTools/ranged/projectile/BugSpray';
+import {Weapon} from '../tools/ToolStates/Weapon';
+import BugASalt from '../tools/DamageTools/ranged/projectile/BugASalt';
+import fireProjectile from '../tools/DamageTools/ranged/projectile/spawnProjectiles';
 
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {

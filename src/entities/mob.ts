@@ -1,3 +1,4 @@
+import { publicDecrypt } from 'crypto';
 import phaser from 'phaser';
 
 export default class Mob extends phaser.Physics.Arcade.Sprite {
@@ -43,7 +44,7 @@ export default class Mob extends phaser.Physics.Arcade.Sprite {
         
         
     }
-    public getAttackDamage(){
+    public getDamage(){
         return this.attackDamage;
     }
     public updatePlayerPos(playerPos: {x: number, y: number}){
@@ -51,5 +52,11 @@ export default class Mob extends phaser.Physics.Arcade.Sprite {
     }
     public getPlayerPos(){
         return this.playerPos;
+    }
+    public getHealth(){
+        return this.health;
+    }
+    public setHealth(health: number){
+        this.health = health;
     }
 }

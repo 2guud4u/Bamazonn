@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
-import BugSpray from '../ranged/BugSpray'
-import BugASalt from '../ranged/BugASalt'
-import { Weapon } from '../../entities/States/Weapon'
+import BugSpray from './BugSpray'
+import BugASalt from './BugASalt'
+import { Weapon } from '../../../ToolStates/Weapon'
 //handle projectile spawning logic
 class ProjectileInfo{
     public Projectiles: Phaser.Physics.Arcade.Group;

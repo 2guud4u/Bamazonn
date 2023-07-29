@@ -1,12 +1,12 @@
 import Phaser from "phaser";
-import Melee from "./closeRange";
-
+import Melee from "./Melee";
+const CANDY_CANE_DAMAGE = 10;
 export default class CandyCane extends Melee{
     body!: Phaser.Physics.Arcade.Body;
-    public ball1!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
     
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
-        super(scene, x, y, texture);
+        super(scene, x, y, texture, CANDY_CANE_DAMAGE);
+
         this.scene = scene;
         this.setScale(.5, 6);
         this.scene.add.existing(this);
@@ -22,10 +22,10 @@ export default class CandyCane extends Melee{
         let coord = {x: 0, y: 0};
         
         this.getBottomCenter(coord,true);
-        this.ball1 = this.scene.physics.add.image(coord.x, coord.y, 'wizball');
-        this.ball1.body.setAllowGravity(false);
-        this.ball1.body.setSize(1)
-        this.ball1.body.pushable = false;
+       
+        
+        this.attackbox.body.setSize(1)
+        
     }
     stab(mousePos: {x: number, y: number}, aimAngle: number, oldpos: Phaser.Math.Vector2){
    
@@ -44,13 +44,12 @@ export default class CandyCane extends Melee{
             //ease: Phaser.Math.Easing.Sine.Out,
             yoyo: true,
             onStart: () => {
-                this.scene.physics.world.enable(this.ball1);
-                this.ball1.enableBody(true)
+                this.scene.physics.world.enable(this.attackbox);
+                this.attackbox.enableBody(true)
             },
             onUpdate: e => {
                 this.getBottomCenter(coord,true);
-                this.ball1.x = coord.x
-                this.ball1.y = coord.y 
+                this.attackbox.setPosition(coord.x, coord.y)
                 let offsetx = -x * e.getValue()
                 let offsety = y * e.getValue()
                 this.x = offsetx 
@@ -62,9 +61,9 @@ export default class CandyCane extends Melee{
                  
             },
             onComplete: () => {
-                this.ball1.x = -1000
-                this.ball1.enableBody(false)
-                this.scene.physics.world.remove(this.ball1.body);
+                this.attackbox.x = -1000
+                this.attackbox.enableBody(false)
+                this.scene.physics.world.remove(this.attackbox.body);
             },
             
             duration: 200,

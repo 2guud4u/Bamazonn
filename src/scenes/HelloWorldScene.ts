@@ -1,20 +1,25 @@
 import Phaser from 'phaser'
 import Player from '../entities/player';
 import Mosquito from '../entities/mosquito';
-import Projectile from '../tools/ranged/projectile';
+import Projectile from '../tools/DamageTools/ranged/projectile/projectile';
 import Bear from '../entities/bear';
 import Mob from '../entities/mob';
 import {spawnBear, spawnMosquito, moveMobs} from '../entities/MobFactory';
 import PlayerContainer from '../entities/playerContainer';
+import startCollisions from '../managers/collisionManager';
+import loadAssets from '../preload/loadTools';
 
 export default class HelloWorldScene extends Phaser.Scene {
   private spacebar!: Phaser.Input.Keyboard.Key;
   private player!: Player;
   private mosquito!: Mosquito;
   private debug: boolean = false;
-  private mobs!: Phaser.Physics.Arcade.Group;
-  private playerContainer!: PlayerContainer;
+  public mobs!: Phaser.Physics.Arcade.Group;
+  public playerContainer!: PlayerContainer;
   public playerPos!: {x: number, y: number};
+  public platforms!: Phaser.Tilemaps.TilemapLayer;
+  public toolsDict!: Map<string, any>;
+
   
   constructor() {
     super('helloworld')
@@ -24,15 +29,17 @@ export default class HelloWorldScene extends Phaser.Scene {
     
     this.load.tilemapTiledJSON('map', 'assets/tilemaps/First.json');
     this.load.image('tiles', 'assets/tilesets/platformPack_tilesheet.png');
-    
+    this.toolsDict = new Map();
+    loadAssets(this);
   }
 
   create() {
     //make map
+    
     const map = this.make.tilemap({ key: 'map' });
      const tileset = map.addTilesetImage('tileset', 'tiles');
-     const platforms = map.createLayer('top', tileset, 10,250);
-    platforms.setCollisionByExclusion([-1], true);
+      this.platforms = map.createLayer('top', tileset, 10,250);
+    this.platforms.setCollisionByExclusion([-1], true);
 
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     
@@ -53,7 +60,7 @@ export default class HelloWorldScene extends Phaser.Scene {
 
   
     
-    
+    startCollisions(this);
     
     spawnBear(this, 800, 600, this.mobs);
      //spawnMosquito(this, 100, 100, this.mobs);
@@ -63,12 +70,12 @@ export default class HelloWorldScene extends Phaser.Scene {
  
     
     
-    this.physics.add.collider(this.playerContainer, platforms);
-    this.physics.add.collider(this.mobs, platforms);
-    this.physics.add.collider(this.playerContainer.Projectiles, this.mobs , this.handleCollision as any, undefined, this);
-    //this.physics.add.collider(this.player, this.mobs , this.handlePlayerCollision as any, undefined, this);
-    this.physics.add.collider(this.playerContainer.cane, this.mobs);
-    this.physics.add.collider(this.playerContainer.cane.ball1, this.mobs, this.hello);
+    // this.physics.add.collider(this.playerContainer, this.platforms);
+    // this.physics.add.collider(this.mobs, this.platforms);
+    // this.physics.add.collider(this.playerContainer.Projectiles, this.mobs , this.handleCollision as any, undefined, this);
+    // //this.physics.add.collider(this.player, this.mobs , this.handlePlayerCollision as any, undefined, this);
+    // this.physics.add.collider(this.playerContainer.cane, this.mobs);
+    // this.physics.add.collider(this.playerContainer.cane.attackbox, this.mobs, this.hello);
 
   }
   update() {

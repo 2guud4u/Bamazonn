@@ -1,9 +1,11 @@
 import Phaser from "phaser";
 import Player from "./player";
-import {Weapon} from './States/Weapon';
-import Projectile from '../tools/ranged/projectile';
-import fireProjectile from '../tools/ranged/spawn';
-import CandyCane from '../tools/melee/candyCane';
+import {Weapon} from '../tools/ToolStates/Weapon';
+import Projectile from '../tools/DamageTools/ranged/projectile/projectile';
+import fireProjectile from '../tools/DamageTools/ranged/projectile/spawnProjectiles';
+import CandyCane from '../tools/DamageTools/melee/candyCane';
+import Tool from "../tools/Tool";
+import HelloWorldScene from "../scenes/HelloWorldScene";
 
 export default class PlayerContainer extends Phaser.GameObjects.Container {
     private pointer!: Phaser.Input.Pointer;
@@ -12,13 +14,17 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     private cursors: any;
     private speed: number = 300;
     private jumpheight: number = 200;
-    private equipment: number = 0;
+    private equipment_ind: number = 0;
     private hotbar = [Weapon.Fist, Weapon.BugSpray, Weapon.BugASalt, Weapon.CandyCane];
     private timeSinceLastFire: number = 0;
     public Projectiles: Phaser.Physics.Arcade.Group;
     public cane: CandyCane;
     private aimAngle: number = 0;
-    constructor(scene: Phaser.Scene, x: number, y: number) {
+    private health: number = 100;
+    public inHand: Tool;
+    public scene: HelloWorldScene;
+    
+    constructor(scene: HelloWorldScene, x: number, y: number) {
         super(scene, x, y);
 
         this.scene = scene;
@@ -28,6 +34,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
 
         
         
+
         this.body.setCollideWorldBounds(true);
 
         //set up player controls
@@ -50,10 +57,9 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
         });
         
         //add candy cane
-        this.cane = new CandyCane(this.scene, 20, 0, 'candy-cane');
-        
-        this.add(this.cane);
-        this.cane.body.setAllowGravity(false);
+        // this.cane = new CandyCane(this.scene, 20, 0, 'candy-cane');
+        // this.cane.body.setAllowGravity(false);
+        // this.add(this.cane);
         
         this.scene.input.on('pointermove', (pointer:Phaser.Input.Pointer) => {
           // Calculate the angle between the player and the world x/y of the mouse, and offset it by Pi/2
@@ -62,11 +68,16 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
           
         });
         this.scene.input.on('pointerdown', (pointer:Phaser.Input.Pointer) => {
-          this.cane.stab(this.pointer.position, this.aimAngle, this.body.position);
-        });
-        //tween stuff
+          if(this.inHand instanceof CandyCane)
+            this.inHand.stab(this.pointer.position, this.aimAngle, this.body.position);
+            //this.cane.stab(this.pointer.position, this.aimAngle, this.body.position);
+          });
+        //make cur weapon fist
+        this.inHand=scene.toolsDict.get(this.hotbar[this.equipment_ind])
+        
         
       }
+    
     update() {
       const { left, right, up, swap } = this.cursors;
       const pointer = this.pointer;
@@ -92,7 +103,13 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
       if (pointer.leftButtonDown()) {
         
         
-        if(fireProjectile(this.hotbar[this.equipment], this.Projectiles, this.scene, this.timeSinceLastFire, this.pointer.position, this.getPosition())){
+        if(fireProjectile(
+          this.hotbar[this.equipment_ind], 
+          this.Projectiles, 
+          this.scene, 
+          this.timeSinceLastFire, 
+          this.pointer.position, 
+          this.getPosition())){
          this.timeSinceLastFire = this.scene.time.now; 
          
         }
@@ -100,33 +117,44 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
   
       }
       //this.aimAngle = (Phaser.Math.Angle.Between(this.x, this.y, pointer.position.x, pointer.position.y) - Math.PI / 2);
-    this.cane.setRotation(this.aimAngle);
+    this.inHand.setRotation(this.aimAngle);
 
-    //this.cane.body.rotation=this.aimAngle;
+    //this.cane.setRotation(this.aimAngle);
       //fire rate logic
       
       
       //update plyer pos
-      this.cane.setRotation(this.aimAngle);
+      
     }
 
 
     private changeEquipment(){
       
-      this.equipment = (this.equipment + 1) % this.hotbar.length;
-      console.log(this.hotbar[this.equipment]);
       
+      //unequip current weapon
+      this.inHand.setVisible(false);
+      this.remove(this.inHand);
+      //equip new weapon
+      this.equipment_ind = (this.equipment_ind + 1) % this.hotbar.length;
+      this.equip();
+
+
+    }
+    private equip(){
+      this.inHand = this.scene.toolsDict.get(this.hotbar[this.equipment_ind])!;
+      this.add(this.inHand);
+      this.inHand.setVisible(true);
     }
 
     public getPosition(): { x: number; y: number } {
       return { x: this.x, y: this.y };
     }
     
-    private mouseClicked(){
-      console.log("mouse clicked");
+    public getHealth(){
+      return this.health;
     }
-    private getRotation(){
-      console.log("move")
+    public setHealth(health: number){
+      this.health = health;
     }
 
 }
