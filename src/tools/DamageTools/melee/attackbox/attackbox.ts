@@ -7,6 +7,8 @@ export default class AttackBox extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, texture);
         this.scene = scene;
         this.damage = damage;
+        scene.physics.world.enable(this);
+        scene.add.existing(this);
     }
     public getDamage(){
         return this.damage;
