@@ -8,6 +8,7 @@ import {spawnBear, spawnMosquito, moveMobs} from '../entities/MobFactory';
 import PlayerContainer from '../entities/playerContainer';
 import startCollisions from '../managers/collisionManager';
 import loadAssets from '../preload/loadTools';
+import damageEntityStore from '../stores/damageEntityStore';
 
 export default class HelloWorldScene extends Phaser.Scene {
   private spacebar!: Phaser.Input.Keyboard.Key;
@@ -19,7 +20,7 @@ export default class HelloWorldScene extends Phaser.Scene {
   public playerPos!: {x: number, y: number};
   public platforms!: Phaser.Tilemaps.TilemapLayer;
   public toolsDict!: Map<string, any>;
-
+  public damageEntityStore!: damageEntityStore;
   
   constructor() {
     super('helloworld')
@@ -29,6 +30,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     
     this.load.tilemapTiledJSON('map', 'assets/tilemaps/First.json');
     this.load.image('tiles', 'assets/tilesets/platformPack_tilesheet.png');
+    this.damageEntityStore = new damageEntityStore(this);
     this.toolsDict = new Map();
     loadAssets(this);
   }
@@ -65,7 +67,9 @@ export default class HelloWorldScene extends Phaser.Scene {
     spawnBear(this, 800, 600, this.mobs);
      //spawnMosquito(this, 100, 100, this.mobs);
     
-   
+    // make damageEntityStore
+    
+      
      
  
     

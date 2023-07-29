@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import Tool from "../../Tool";
 import DamageTool from "../DamageTool";
-
+import AttackBox from "./attackbox/attackbox";
 export default class Melee extends DamageTool {
     
 

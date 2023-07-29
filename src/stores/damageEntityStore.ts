@@ -13,4 +13,10 @@ export default class damageEntityStore{
             runChildUpdate: true,
         });
     }
+    public addAttackbox(attackbox: Phaser.Types.Physics.Arcade.ImageWithDynamicBody){
+        this.attackboxes.add(attackbox);
+    }
+    public addProjectile(projectile: Projectile){
+        this.projectiles.add(projectile);
+    }
 }
