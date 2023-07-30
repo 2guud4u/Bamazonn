@@ -2,11 +2,12 @@ import Phaser from "phaser";
 import Melee from "./Melee";
 import HelloWorldScene from "../../../scenes/HelloWorldScene";
 const CANDY_CANE_DAMAGE = 10;
+const FIRE_RATE = 500;
 export default class CandyCane extends Melee{
     body!: Phaser.Physics.Arcade.Body;
     scene!: HelloWorldScene;
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
-        super(scene, x, y, texture, CANDY_CANE_DAMAGE);
+        super(scene, x, y, texture, CANDY_CANE_DAMAGE, FIRE_RATE);
 
         this.scene = scene as HelloWorldScene;
         this.setScale(.5, 6);
@@ -29,7 +30,7 @@ export default class CandyCane extends Melee{
         this.scene.damageEntityStore.attackboxes.add(this.attackbox)
         
     }
-    stab(mousePos: {x: number, y: number}, aimAngle: number, oldpos: Phaser.Math.Vector2){
+    public attack(aimAngle: number){
    
          
         // console.log("stabbing at ", coord);

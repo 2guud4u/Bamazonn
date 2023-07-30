@@ -6,7 +6,8 @@ import fireProjectile from '../tools/DamageTools/ranged/projectile/spawnProjecti
 import CandyCane from '../tools/DamageTools/melee/candyCane';
 import Tool from "../tools/Tool";
 import HelloWorldScene from "../scenes/HelloWorldScene";
-
+import Melee from "../tools/DamageTools/melee/Melee";
+import Ranged from "../tools/DamageTools/ranged/Ranged";
 export default class PlayerContainer extends Phaser.GameObjects.Container {
     private pointer!: Phaser.Input.Pointer;
     private box: Phaser.GameObjects.Sprite;
@@ -67,11 +68,11 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
           
           
         });
-        this.scene.input.on('pointerdown', (pointer:Phaser.Input.Pointer) => {
-          if(this.inHand instanceof CandyCane)
-            this.inHand.stab(this.pointer.position, this.aimAngle, this.body.position);
-            //this.cane.stab(this.pointer.position, this.aimAngle, this.body.position);
-          });
+        // this.scene.input.on('pointerdown', (pointer:Phaser.Input.Pointer) => {
+        //   if(this.inHand instanceof CandyCane)
+        //     this.inHand.stab(this.pointer.position, this.aimAngle, this.body.position);
+        //     //this.cane.stab(this.pointer.position, this.aimAngle, this.body.position);
+        //   });
         //make cur weapon fist
         this.inHand=scene.toolsDict.get(this.hotbar[this.equipment_ind])
         
@@ -100,37 +101,38 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
       if(Phaser.Input.Keyboard.JustDown(swap)){
         this.changeEquipment()
       }
-      if (pointer.leftButtonDown()) {
-        
-        
-        if(fireProjectile(
-          this.hotbar[this.equipment_ind], 
-          this.Projectiles, 
-          this.scene, 
-          this.timeSinceLastFire, 
-          this.pointer.position, 
-          this.getPosition())){
-         this.timeSinceLastFire = this.scene.time.now; 
-         
-        }
-        
-  
-      }
-      //this.aimAngle = (Phaser.Math.Angle.Between(this.x, this.y, pointer.position.x, pointer.position.y) - Math.PI / 2);
-    this.inHand.setRotation(this.aimAngle);
-
-    //this.cane.setRotation(this.aimAngle);
-      //fire rate logic
       
-      
-      //update plyer pos
+      this.inHand.setRotation(this.aimAngle);
+      this.handleClick(pointer);
       
     }
 
+    private handleClick(pointer: Phaser.Input.Pointer) {
+      if (pointer.leftButtonDown()) {
+        if(this.inHand instanceof Ranged){
+          if(fireProjectile(
+            this.hotbar[this.equipment_ind], this.Projectiles, this.scene, this.timeSinceLastFire, this.pointer.position, this.getPosition())){
+            this.timeSinceLastFire = this.scene.time.now; 
+          
+          }
+        } else if(this.inHand instanceof Melee){
+          if(this.scene.time.now- this.timeSinceLastFire  > 500){
+            this.inHand.attack(this.aimAngle);
+            this.timeSinceLastFire = this.scene.time.now; 
+          }
+            
+          
+        
+        }
 
+        
+         
+          
+    
+        }
+    }
+    
     private changeEquipment(){
-      
-      
       //unequip current weapon
       this.inHand.setVisible(false);
       this.remove(this.inHand);
