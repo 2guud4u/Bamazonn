@@ -7,7 +7,7 @@ export default class BugSpray extends Ranged {
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
         super(scene, x, y, texture, BUG_SPRAY_DAMAGE);
         this.scene = scene;
-        this.setScale(.5, 6);
+        this.setScale(1,2);
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         this.body.enable = false;

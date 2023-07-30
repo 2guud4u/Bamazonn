@@ -39,16 +39,14 @@ export default class HelloWorldScene extends Phaser.Scene {
     //make map
     
     const map = this.make.tilemap({ key: 'map' });
-     const tileset = map.addTilesetImage('tileset', 'tiles');
-      this.platforms = map.createLayer('top', tileset, 10,250);
+    const tileset = map.addTilesetImage('tileset', 'tiles');
+    this.platforms = map.createLayer('top', tileset, 10,250);
     this.platforms.setCollisionByExclusion([-1], true);
 
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     
     
-    //const bear = new Bear(this, 800, 600, 'player-key');
-    // Create your square player sprite and initialize its properties
-    //this.player = new Player(this, 100, 450, 'player-key');
+    
     this.playerContainer = new PlayerContainer(this, 100, 450);
     this.mobs = this.physics.add.group(
       {
@@ -74,13 +72,7 @@ export default class HelloWorldScene extends Phaser.Scene {
  
     
     
-    // this.physics.add.collider(this.playerContainer, this.platforms);
-    // this.physics.add.collider(this.mobs, this.platforms);
-    // this.physics.add.collider(this.playerContainer.Projectiles, this.mobs , this.handleCollision as any, undefined, this);
-    // //this.physics.add.collider(this.player, this.mobs , this.handlePlayerCollision as any, undefined, this);
-    // this.physics.add.collider(this.playerContainer.cane, this.mobs);
-    // this.physics.add.collider(this.playerContainer.cane.attackbox, this.mobs, this.hello);
-
+    
   }
   update() {
     if(this.spacebar.isDown){

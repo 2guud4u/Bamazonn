@@ -7,7 +7,7 @@ export default class BugAsalt extends Ranged {
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
         super(scene, x, y, texture, BUGASALT_DAMAGE);
         this.scene = scene;
-        this.setScale(.5, 6);
+        this.setScale(1, 4);
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         this.body.enable = false;
