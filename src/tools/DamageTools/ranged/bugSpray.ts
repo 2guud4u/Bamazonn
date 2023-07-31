@@ -14,4 +14,17 @@ export default class BugSpray extends Ranged {
         this.body.enable = false;
         this.body.setSize(2);
     }
+    public shoot(timeSinceLastFire: number, pointer_position: {x:number, y:number}, shootFromPos: {x:number, y:number}){
+        if (info.scene.time.now- info.timeSinceLastFire  > FIRE_RATE) {
+
+            const Projectile1 = new BugASalt(info.scene, info.shootFromPos.x, info.shootFromPos.y, 'Projectile-key');
+    
+            info.Projectiles.add(Projectile1);
+    
+            Projectile1.setProjectileDirection(info.shootToPos);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

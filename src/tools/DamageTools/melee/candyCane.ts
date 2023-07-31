@@ -1,11 +1,13 @@
 import Phaser from "phaser";
 import Melee from "./Melee";
 import HelloWorldScene from "../../../scenes/HelloWorldScene";
+import { time } from "console";
 const CANDY_CANE_DAMAGE = 10;
-const FIRE_RATE = 500;
+const FIRE_RATE = 700;
 export default class CandyCane extends Melee{
     body!: Phaser.Physics.Arcade.Body;
     scene!: HelloWorldScene;
+   
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
         super(scene, x, y, texture, CANDY_CANE_DAMAGE, FIRE_RATE);
 
@@ -30,12 +32,13 @@ export default class CandyCane extends Melee{
         this.scene.damageEntityStore.attackboxes.add(this.attackbox)
         
     }
-    public attack(aimAngle: number){
+    public attack(aimAngle: number, timeSinceLastFire: number){
    
          
-        // console.log("stabbing at ", coord);
+        //return if the player is attacking too fast
+        if(this.scene.time.now - timeSinceLastFire  < this.getFireRate())
+            return timeSinceLastFire;
         
-     
         let coord = {x: 0, y: 0};
         
         const x = Math.sin(aimAngle)
@@ -71,7 +74,7 @@ export default class CandyCane extends Melee{
             
             duration: 200,
         })
-
+        return this.scene.time.now;
         
     }   
 }

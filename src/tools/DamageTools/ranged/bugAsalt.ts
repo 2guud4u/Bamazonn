@@ -16,4 +16,7 @@ export default class BugAsalt extends Ranged {
         this.body.setAllowGravity(false);
         
     }
+    public shoot(){
+        
+    }
 }

@@ -116,9 +116,9 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
           
           }
         } else if(this.inHand instanceof Melee){
-          if(this.scene.time.now- this.timeSinceLastFire  > 500){
-            this.inHand.attack(this.aimAngle);
-            this.timeSinceLastFire = this.scene.time.now; 
+          if(this.scene.time.now - this.timeSinceLastFire  > 500){
+            
+            this.timeSinceLastFire = this.inHand.attack(this.aimAngle, this.timeSinceLastFire);
           }
             
           
@@ -146,6 +146,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
       this.inHand = this.scene.toolsDict.get(this.hotbar[this.equipment_ind])!;
       this.add(this.inHand);
       this.inHand.setVisible(true);
+      console.log(this.inHand.constructor.name)
     }
 
     public getPosition(): { x: number; y: number } {

@@ -1,6 +1,6 @@
 import Phaser from "phaser";
-
-export default class DamageTools extends Phaser.GameObjects.Sprite {
+import Tool from "../Tool";
+export default class DamageTools extends Tool {
     private Damage!: number;
     
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, damage: number, fireRate: number) {
