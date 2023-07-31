@@ -12,6 +12,7 @@ export default class BugASalt extends Projectile{
         
     }
     update() {
+        
         if (!this || !this.active) {
             return;
           }

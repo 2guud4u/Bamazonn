@@ -7,5 +7,7 @@ export default class Ranged extends DamageTools {
         super(scene, x, y, texture, damage, fireRate);
         
     }
-    public shoot(){}
+    public shoot(timeSinceLastFire: number, shootToPos: {x:number, y:number}, shootFromPos: {x:number, y:number}){
+        return timeSinceLastFire;
+    }
 }

@@ -28,12 +28,7 @@ export default class Projectile extends Phaser.Physics.Arcade.Sprite {
   update() {
     // Calculate the angle between player and click position
     
-    if (this.x > this.scene.sys.canvas.width || 
-        this.y < 0 ||
-        this.x < 0 ||
-        this.y > this.scene.sys.canvas.height) {
-        this.destroy(); // Remove the bullet from the scene
-    }
+   
     
   }
   public getDamage(){

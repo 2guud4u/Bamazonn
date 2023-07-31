@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import Projectile from "./projectile";
 
-export default class BugSpray extends Projectile{
+export default class BugSpray_Projectile extends Projectile{
     private growthRate: number = 0.001;
     private stationaryTime: number = 0;
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
@@ -12,6 +12,7 @@ export default class BugSpray extends Projectile{
         
     }
     update() {
+        console.log("shoot")
         if (this.x > this.scene.sys.canvas.width || 
             this.y < 0 ||
             this.x < 0 ||

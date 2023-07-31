@@ -10,8 +10,8 @@ import damageEntityStore from "../stores/damageEntityStore";
 export default function startCollisions(scene: HelloWorldScene){
     
     entitiesToPlayer(scene, scene.playerContainer, scene.mobs);
-    entitiesToMelee(scene, scene.damageEntityStore, scene.mobs);
-    entitiesToProjectile(scene, scene.playerContainer.Projectiles, scene.mobs);
+    entitiesToMelee(scene, scene.damageEntityStore.attackboxes, scene.mobs);
+    entitiesToProjectile(scene, scene.damageEntityStore.projectiles, scene.mobs);
     envToEntities(scene, scene.mobs, scene.platforms);
     envToPlayer(scene, scene.playerContainer, scene.platforms);
 
@@ -22,13 +22,13 @@ export function entitiesToPlayer(scene: Phaser.Scene, player:PlayerContainer, mo
 
 }
 
-export function entitiesToMelee(scene: Phaser.Scene, melee: damageEntityStore ,mobs: Phaser.Physics.Arcade.Group){
+export function entitiesToMelee(scene: Phaser.Scene, melee: Phaser.Physics.Arcade.Group ,mobs: Phaser.Physics.Arcade.Group){
     
-    scene.physics.add.collider(melee.attackboxes, mobs , handleEntityMelee as Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, undefined, undefined);
+    scene.physics.add.collider(melee, mobs , handleEntityMelee as Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, undefined, undefined);
 }
 
 export function entitiesToProjectile(scene: Phaser.Scene, Projectiles: Phaser.Physics.Arcade.Group, mobs: Phaser.Physics.Arcade.Group){
-    scene.physics.add.collider(Projectiles,mobs , handleEntityProjectile as Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, undefined, undefined);
+    scene.physics.add.collider(Projectiles, mobs , handleEntityProjectile as Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, undefined, undefined);
 }
 
 export function envToEntities(scene: Phaser.Scene, mobs: Phaser.Physics.Arcade.Group, env: Phaser.Tilemaps.TilemapLayer){

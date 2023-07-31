@@ -2,7 +2,7 @@ import phaser from 'phaser';
 import CandyCane from '../tools/DamageTools/melee/candyCane';
 import HelloWorldScene from '../scenes/HelloWorldScene';
 import {Weapon} from '../tools/ToolStates/Weapon';
-import BugSpray from '../tools/DamageTools/ranged/bugSpray';
+import bugSpray from '../tools/DamageTools/ranged/bugSpray';
 import BugASalt from '../tools/DamageTools/ranged/bugAsalt';
 import Fist from '../tools/DamageTools/melee/fist';
 import Tool from '../tools/Tool';
@@ -13,7 +13,7 @@ export default function loadAssets(scene: HelloWorldScene) {
 
 function loadWeapons(scene: HelloWorldScene){
     scene.toolsDict.set(Weapon.CandyCane,new CandyCane(scene, 20, 0, 'candy-cane'));
-    scene.toolsDict.set(Weapon.BugSpray, new BugSpray(scene, 20, 0, 'bug-spray'));
+    scene.toolsDict.set(Weapon.BugSpray, new bugSpray(scene, 20, 0, 'bug-spray'));
     scene.toolsDict.set(Weapon.BugASalt, new BugASalt(scene, 20, 0, 'bug-a-salt'));
     scene.toolsDict.set(Weapon.Fist, new Fist(scene, 0, 0, 'fist'));
 }

@@ -56,17 +56,11 @@ export default class HelloWorldScene extends Phaser.Scene {
       
     );
     
-    
-
-  
-    
     startCollisions(this);
     
     spawnBear(this, 800, 600, this.mobs);
      //spawnMosquito(this, 100, 100, this.mobs);
-    
-    // make damageEntityStore
-    
+
       
      
  
@@ -83,7 +77,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     //   this.player.update();
     //   this.playerContainer.update();
     // }
-    
+ 
     moveMobs(this.playerContainer, this.mobs);
 
     }
