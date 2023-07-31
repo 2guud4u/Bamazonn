@@ -1,8 +1,8 @@
 import Phaser from "phaser";
 import Projectile from "../tools/DamageTools/ranged/projectile/projectile";
 export default class damageEntityStore{
-    public attackboxes: Phaser.Physics.Arcade.Group;
-    public projectiles: Phaser.Physics.Arcade.Group;
+    private attackboxes: Phaser.Physics.Arcade.Group;
+    private projectiles: Phaser.Physics.Arcade.Group;
     constructor(scene: Phaser.Scene){
         this.attackboxes = scene.physics.add.group({
             classType: Projectile,
@@ -17,6 +17,13 @@ export default class damageEntityStore{
         this.attackboxes.add(attackbox);
     }
     public addProjectile(projectile: Projectile){
+        console.log("added")
         this.projectiles.add(projectile);
+    }
+    public getAttackboxes(){
+        return this.attackboxes;
+    }
+    public getProjectiles(){
+        return this.projectiles;
     }
 }

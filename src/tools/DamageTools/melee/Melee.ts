@@ -16,7 +16,7 @@ export default class Melee extends DamageTool {
     
         this.attackbox.body.setAllowGravity(false);
         this.attackbox.body.pushable = false;
-        this.scene.damageEntityStore.attackboxes.add(this.attackbox)
+        this.scene.damageEntityStore.addAttackbox(this.attackbox)
 
     }
     public attack(aimAngle: number, timeSinceLastFire: number){

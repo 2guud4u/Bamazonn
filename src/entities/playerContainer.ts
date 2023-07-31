@@ -110,12 +110,10 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     private handleClick(pointer: Phaser.Input.Pointer) {
       if (pointer.leftButtonDown()) {
         if(this.inHand instanceof Ranged){
-          // if(fireProjectile(
-          //   this.hotbar[this.equipment_ind], this.Projectiles, this.scene, this.timeSinceLastFire, this.pointer.position, this.getPosition())){
-          //   this.timeSinceLastFire = this.scene.time.now; 
-          
-          // }
-          this.timeSinceLastFire = this.inHand.shoot(this.timeSinceLastFire, this.pointer.position, this.getPosition());
+          let coord = {x: 0, y: 0};
+        
+          this.inHand.getBottomCenter(coord,true);
+          this.timeSinceLastFire = this.inHand.shoot(this.timeSinceLastFire, this.pointer.position, coord);
         } else if(this.inHand instanceof Melee){
           if(this.scene.time.now - this.timeSinceLastFire  > 500){
             

@@ -26,9 +26,9 @@ export default class bugSpray extends Ranged {
         const Projectile3 = new BugSpray_Projectile(this.scene, shootFromPos.x, shootFromPos.y + 20, 'Projectile-key');
         
         //add to store
-        this.scene.damageEntityStore.attackboxes.add(Projectile1);
-        this.scene.damageEntityStore.attackboxes.add(Projectile2);
-        this.scene.damageEntityStore.attackboxes.add(Projectile3);
+        this.scene.damageEntityStore.addProjectile(Projectile1);
+        this.scene.damageEntityStore.addProjectile(Projectile2);
+        this.scene.damageEntityStore.addProjectile(Projectile3);
 
         Projectile1.setProjectileDirection(shootToPos);
         Projectile2.setProjectileDirection(shootToPos);

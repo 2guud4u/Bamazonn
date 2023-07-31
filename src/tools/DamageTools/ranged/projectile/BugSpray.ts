@@ -7,7 +7,7 @@ export default class BugSpray_Projectile extends Projectile{
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
         super(scene, x, y, texture, 400, 1);
         this.setScale(.4);
-       
+        
         
         
     }

@@ -10,8 +10,8 @@ import damageEntityStore from "../stores/damageEntityStore";
 export default function startCollisions(scene: HelloWorldScene){
     
     entitiesToPlayer(scene, scene.playerContainer, scene.mobs);
-    entitiesToMelee(scene, scene.damageEntityStore.attackboxes, scene.mobs);
-    entitiesToProjectile(scene, scene.damageEntityStore.projectiles, scene.mobs);
+    entitiesToMelee(scene, scene.damageEntityStore.getAttackboxes(), scene.mobs);
+    entitiesToProjectile(scene, scene.damageEntityStore.getProjectiles(), scene.mobs);
     envToEntities(scene, scene.mobs, scene.platforms);
     envToPlayer(scene, scene.playerContainer, scene.platforms);
 

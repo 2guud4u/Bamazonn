@@ -29,7 +29,7 @@ export default class CandyCane extends Melee{
        
         
         this.attackbox.body.setSize(1)
-        this.scene.damageEntityStore.attackboxes.add(this.attackbox)
+        this.scene.damageEntityStore.addAttackbox(this.attackbox)
         
     }
     public attack(aimAngle: number, timeSinceLastFire: number){

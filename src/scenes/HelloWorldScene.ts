@@ -79,7 +79,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     // }
  
     moveMobs(this.playerContainer, this.mobs);
-
+    
     }
     
 

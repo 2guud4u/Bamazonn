@@ -7,6 +7,7 @@ const FIRE_RATE = 1000;
 export default class BugAsalt extends Ranged {
     body: Phaser.Physics.Arcade.Body;
     scene: HelloWorldScene
+    
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
         super(scene, x, y, texture, BUGASALT_DAMAGE, FIRE_RATE);
         this.scene = scene as HelloWorldScene;
@@ -25,9 +26,10 @@ export default class BugAsalt extends Ranged {
         }
             const Projectile1 = new BugASalt(this.scene, shootFromPos.x, shootFromPos.y, 'Projectile-key');
     
-            this.scene.damageEntityStore.attackboxes.add(Projectile1);
-    
+            
+            this.scene.damageEntityStore.addProjectile(Projectile1);
             Projectile1.setProjectileDirection(shootToPos);
+            
             return this.scene.time.now;
         
     }
