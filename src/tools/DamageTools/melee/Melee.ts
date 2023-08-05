@@ -7,9 +7,9 @@ export default class Melee extends DamageTool {
     
     public scene!: HelloWorldScene;
     public attackbox!: AttackBox;
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string, damage: number, fireRate: number) {
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string, damage: number, fireRate: number, knockbackStrength: number, stunStrength: number) {
         
-        super(scene, x, y, texture, damage, fireRate);
+        super(scene, x, y, texture, damage, fireRate, knockbackStrength, stunStrength);
         this.scene = scene as HelloWorldScene;
         //this.scene.physics.add.existing(this);
         this.attackbox = new AttackBox(this.scene, this.x, this.y, 'attackbox', damage);

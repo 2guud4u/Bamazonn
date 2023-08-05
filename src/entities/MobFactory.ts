@@ -17,8 +17,11 @@ export function moveMobs(player: PlayerContainer, mobs: Phaser.Physics.Arcade.Gr
     mobs.getChildren().forEach((child) => {
         if(child){
             if(child instanceof Mob ){
-                child.updatePlayerPos(player);
-                child.update();
+                if(!child.isStunned()){
+                    child.updatePlayerPos(player);
+                    child.update();
+                }
+                
             }
         }
     });

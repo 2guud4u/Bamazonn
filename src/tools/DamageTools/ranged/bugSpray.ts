@@ -4,11 +4,13 @@ import BugSpray_Projectile from "./projectile/BugSpray";
 import HelloWorldScene from "../../../scenes/HelloWorldScene";
 const BUG_SPRAY_DAMAGE = 1;
 const FIRE_RATE = 1000;
+const STUN_STRENGTH = 100;
+const kNOCKBACK_STRENGTH = 100;
 export default class bugSpray extends Ranged {
     body: Phaser.Physics.Arcade.Body;
     scene: HelloWorldScene
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
-        super(scene, x, y, texture, BUG_SPRAY_DAMAGE, FIRE_RATE);
+        super(scene, x, y, texture, BUG_SPRAY_DAMAGE, FIRE_RATE, kNOCKBACK_STRENGTH, STUN_STRENGTH);
         this.scene = scene as HelloWorldScene;
         this.setScale(1,2);
         this.scene.add.existing(this);

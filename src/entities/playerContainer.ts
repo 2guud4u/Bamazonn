@@ -8,6 +8,7 @@ import Tool from "../tools/Tool";
 import HelloWorldScene from "../scenes/HelloWorldScene";
 import Melee from "../tools/DamageTools/melee/Melee";
 import Ranged from "../tools/DamageTools/ranged/Ranged";
+
 export default class PlayerContainer extends Phaser.GameObjects.Container {
     private pointer!: Phaser.Input.Pointer;
     private box: Phaser.GameObjects.Sprite;
@@ -24,7 +25,8 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     private health: number = 100;
     public inHand: Tool;
     public scene: HelloWorldScene;
-    
+    private stun: boolean = false;
+    private stunResist: number = 100;
     constructor(scene: HelloWorldScene, x: number, y: number) {
         super(scene, x, y);
 
@@ -158,5 +160,14 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     public setHealth(health: number){
       this.health = health;
     }
+    public isStunned(){
+      return this.stun;
+    }
+    public setStun(stun: boolean){
+      this.stun = stun;
+    } 
 
+    public getStunResist(){
+      return this.stunResist;
+    }
 }

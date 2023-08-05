@@ -3,10 +3,9 @@ import PlayerContainer from "../entities/playerContainer";
 import Mob from "../entities/mob";
 
 import projectile from "../tools/DamageTools/ranged/projectile/projectile";
+import AttackBox from "../tools/DamageTools/melee/attackbox/attackbox";
 import HelloWorldScene from "../scenes/HelloWorldScene";
-import Melee from "../tools/DamageTools/melee/Melee";
-import Tool from "../tools/Tool";
-import damageEntityStore from "../stores/damageEntityStore";
+
 export default function startCollisions(scene: HelloWorldScene){
     
     entitiesToPlayer(scene, scene.playerContainer, scene.mobs);
@@ -41,30 +40,34 @@ export function envToPlayer(scene: Phaser.Scene, player: PlayerContainer, env: P
 
 function handleEntityProjectile(projectile: projectile, entity: Mob){
     takeDamage(entity, projectile);
-    knockBack(entity);
+    knockBack(entity, projectile);
+    
     projectile.destroy();
     console.log("projectile hit")
 }
-function handleEntityMelee(attackbox: any, entity: Mob){
+function handleEntityMelee(attackbox: AttackBox, entity: Mob){
     takeDamage(entity, attackbox);
-    knockBack(entity);
+    knockBack(entity, attackbox);
     console.log("melee hit")
 }
 
 function handleEntityPlayer(player: PlayerContainer, entity: Mob){
     takeDamage(player, entity);
-    knockBack(player);
+    knockBack(player, entity);
 }
 
-function takeDamage(victim: any, attacker:any){
+function takeDamage(victim: PlayerContainer|Mob, attacker: projectile | AttackBox | Mob){
     victim.setHealth(victim.getHealth() - attacker.getDamage())
 }
 
-function knockBack(victim: any) {
-    // if(victim.body.blocked.left){
-    //       victim.setVelocityX(100);
-    // }
-      
+function knockBack(victim: PlayerContainer | Mob, attacker: projectile | AttackBox | Mob) {
+    
+    victim.setStun(true);
+    if(victim.body.touching.left){
+        
+        victim.body.setVelocityX(400) ;
+    }
+    victim.scene.time.delayedCall(100, () => {victim.setStun(false)}, null, victim.scene);
 
     console.log("knockback")
 }

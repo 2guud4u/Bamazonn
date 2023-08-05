@@ -2,9 +2,10 @@ import Phaser from "phaser";
 import Mob from "./mob";
 const damage: number = 20;
 const health: number = 30;
+const STUN_RESIST: number = 100;
 export default class Bear extends Mob{
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
-        super(scene, x, y, texture, damage, health);
+        super(scene, x, y, texture, damage, health, STUN_RESIST);
         this.scene = scene
         this.setScale(2);
         this.scene.add.existing(this);

@@ -59,7 +59,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     startCollisions(this);
     
     spawnBear(this, 800, 600, this.mobs);
-     //spawnMosquito(this, 100, 100, this.mobs);
+     spawnMosquito(this, 100, 100, this.mobs);
 
       
      

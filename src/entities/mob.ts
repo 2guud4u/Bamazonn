@@ -5,7 +5,10 @@ export default class Mob extends phaser.Physics.Arcade.Sprite {
     private health!: number;
     public attackDamage!: number;
     private playerPos!: {x: number, y: number};
-    constructor(scene: phaser.Scene, x: number, y: number, texture: string, health: number, attackDamage: number) { 
+    private stun: boolean = false;
+    public body!: Phaser.Physics.Arcade.Body;
+    private stunResist!: number;
+    constructor(scene: phaser.Scene, x: number, y: number, texture: string, health: number, attackDamage: number, stunResist: number) { 
         super(scene, x, y, texture);
         this.scene.physics.add.existing(this);
         
@@ -31,6 +34,7 @@ export default class Mob extends phaser.Physics.Arcade.Sprite {
         //mob stats
         this.health = health;
         this.attackDamage = attackDamage;
+        this.stunResist = stunResist;
     }
     public damaged(damage: number){
         if(this.health <= 1){
@@ -58,5 +62,14 @@ export default class Mob extends phaser.Physics.Arcade.Sprite {
     }
     public setHealth(health: number){
         this.health = health;
+    }
+    public isStunned(){
+        return this.stun;
+    }
+    public setStun(stun: boolean){
+        this.stun = stun;
+    }
+    public getStunResist(){
+        return this.stunResist;
     }
 }
