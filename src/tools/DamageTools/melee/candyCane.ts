@@ -4,14 +4,14 @@ import HelloWorldScene from "../../../scenes/HelloWorldScene";
 import { time } from "console";
 const CANDY_CANE_DAMAGE = 10;
 const FIRE_RATE = 700;
-const STUN_STRENGTH = 100;
-const kNOCKBACK_STRENGTH = 100;
+const STUN_STRENGTH = 120;
+const KNOCKBACK_STRENGTH = 750;
 export default class CandyCane extends Melee{
     body!: Phaser.Physics.Arcade.Body;
     scene!: HelloWorldScene;
    
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
-        super(scene, x, y, texture, CANDY_CANE_DAMAGE, FIRE_RATE, kNOCKBACK_STRENGTH, STUN_STRENGTH);
+        super(scene, x, y, texture, CANDY_CANE_DAMAGE, FIRE_RATE, KNOCKBACK_STRENGTH, STUN_STRENGTH);
 
         this.scene = scene as HelloWorldScene;
         this.setScale(.5, 6);
@@ -31,7 +31,7 @@ export default class CandyCane extends Melee{
        
         
         this.attackbox.body.setSize(1)
-        this.scene.damageEntityStore.addAttackbox(this.attackbox)
+        //this.scene.damageEntityStore.addAttackbox(this.attackbox)
         
     }
     public attack(aimAngle: number, timeSinceLastFire: number){

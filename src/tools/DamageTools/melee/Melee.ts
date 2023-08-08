@@ -12,7 +12,7 @@ export default class Melee extends DamageTool {
         super(scene, x, y, texture, damage, fireRate, knockbackStrength, stunStrength);
         this.scene = scene as HelloWorldScene;
         //this.scene.physics.add.existing(this);
-        this.attackbox = new AttackBox(this.scene, this.x, this.y, 'attackbox', damage);
+        this.attackbox = new AttackBox(this.scene, this.x, this.y, 'attackbox', damage, knockbackStrength, stunStrength);
     
         this.attackbox.body.setAllowGravity(false);
         this.attackbox.body.pushable = false;

@@ -3,10 +3,12 @@ import Mob from './mob';
 const damage: number = 5;
 const health: number = 10;
 const STUN_RESIST: number = 0;
+const KNOCKBACK_STRENGTH: number = 10;
+const STUN_STRENGTH: number = 100;
 export default class Mosquito extends Mob {
     
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
-        super(scene, x, y, texture, health, damage, STUN_RESIST);
+        super(scene, x, y, texture, health, damage, STUN_RESIST, KNOCKBACK_STRENGTH, STUN_STRENGTH);
         
         //size
         this.setScale(.5);

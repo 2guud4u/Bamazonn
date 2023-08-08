@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import Player from '../entities/player';
+
 import Mosquito from '../entities/mosquito';
 import Projectile from '../tools/DamageTools/ranged/projectile/projectile';
 import Bear from '../entities/bear';
@@ -12,7 +12,7 @@ import damageEntityStore from '../stores/damageEntityStore';
 
 export default class HelloWorldScene extends Phaser.Scene {
   private spacebar!: Phaser.Input.Keyboard.Key;
-  private player!: Player;
+
   private mosquito!: Mosquito;
   private debug: boolean = false;
   public mobs!: Phaser.Physics.Arcade.Group;

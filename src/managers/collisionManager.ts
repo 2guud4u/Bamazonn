@@ -61,13 +61,27 @@ function takeDamage(victim: PlayerContainer|Mob, attacker: projectile | AttackBo
 }
 
 function knockBack(victim: PlayerContainer | Mob, attacker: projectile | AttackBox | Mob) {
-    
+    let knockback = (attacker.getKnockback()-victim.getStunResist() > 0) ? attacker.getKnockback()-victim.getStunResist() : 0;
+    let stun = (attacker.getStunStrength()-victim.getStunResist() > 0) ? attacker.getStunStrength()-victim.getStunResist() : 0;
+    console.log(knockback, stun)
     victim.setStun(true);
-    if(victim.body.touching.left){
-        
-        victim.body.setVelocityX(400) ;
+    if(victim.body.touching.left && victim.x-attacker.x > 0){  
+        victim.body.setVelocityX(knockback) ;
     }
-    victim.scene.time.delayedCall(100, () => {victim.setStun(false)}, null, victim.scene);
+    else if(victim.body.touching.right && victim.x-attacker.x < 0){
+        victim.body.setVelocityX(-knockback);
+    }
+
+    if(victim.body.touching.up && victim.y-attacker.y > 0){
+        victim.body.setVelocityY(knockback);
+    }
+    else if(victim.body.touching.down && victim.y-attacker.y < 0){
+        victim.body.setVelocityY(-knockback);
+    }
+
+
+
+    victim.scene.time.delayedCall(stun, () => {victim.setStun(false)}, null, victim.scene);
 
     console.log("knockback")
 }

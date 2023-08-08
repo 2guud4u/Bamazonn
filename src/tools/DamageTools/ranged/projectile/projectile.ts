@@ -4,7 +4,9 @@ export default class Projectile extends Phaser.Physics.Arcade.Sprite {
     private ProjectileDirection!: {x: number, y: number};
     private ProjectileSpeed!: number; 
     private Damage!: number;
-  constructor(scene: Phaser.Scene, x: number, y: number, texture: string, projectileSpeed: number, damage: number) {
+    private knockbackStrength!: number;
+    private stunStrength!: number;
+  constructor(scene: Phaser.Scene, x: number, y: number, texture: string, projectileSpeed: number, damage: number, knockbackStrength: number, stunStrength: number) {
     super(scene, x, y, texture);
     scene.physics.world.enable(this);
     scene.add.existing(this);
@@ -14,8 +16,10 @@ export default class Projectile extends Phaser.Physics.Arcade.Sprite {
     this.body.onCollide = true;
     this.ProjectileSpeed = projectileSpeed;
     this.Damage = damage;
-    
+    this.knockbackStrength = knockbackStrength;
+    this.stunStrength = stunStrength;
     }
+
   public setProjectileDirection(direction: {x: number, y: number}){
     this.ProjectileDirection = direction;
     const angle = Phaser.Math.Angle.Between(this.x, this.y, this.ProjectileDirection.x, this.ProjectileDirection.y);
@@ -33,6 +37,12 @@ export default class Projectile extends Phaser.Physics.Arcade.Sprite {
   }
   public getDamage(){
     return this.Damage;
-}
+  }
+  public getKnockback(){
+    return this.knockbackStrength;
+  }
+  public getStunStrength(){
+    return this.stunStrength;
+  }
 
 }

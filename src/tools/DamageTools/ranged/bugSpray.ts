@@ -4,13 +4,14 @@ import BugSpray_Projectile from "./projectile/BugSpray";
 import HelloWorldScene from "../../../scenes/HelloWorldScene";
 const BUG_SPRAY_DAMAGE = 1;
 const FIRE_RATE = 1000;
-const STUN_STRENGTH = 100;
-const kNOCKBACK_STRENGTH = 100;
+const STUN_STRENGTH = 800;
+const KNOCKBACK_STRENGTH = 150;
+
 export default class bugSpray extends Ranged {
     body: Phaser.Physics.Arcade.Body;
     scene: HelloWorldScene
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
-        super(scene, x, y, texture, BUG_SPRAY_DAMAGE, FIRE_RATE, kNOCKBACK_STRENGTH, STUN_STRENGTH);
+        super(scene, x, y, texture,  400,BUG_SPRAY_DAMAGE, KNOCKBACK_STRENGTH, STUN_STRENGTH);
         this.scene = scene as HelloWorldScene;
         this.setScale(1,2);
         this.scene.add.existing(this);
@@ -23,9 +24,9 @@ export default class bugSpray extends Ranged {
         if (this.scene.time.now- timeSinceLastFire  < FIRE_RATE) {
             return timeSinceLastFire;
         }
-        const Projectile1 = new BugSpray_Projectile(this.scene, shootFromPos.x, shootFromPos.y, 'Projectile-key');
-        const Projectile2 = new BugSpray_Projectile(this.scene, shootFromPos.x, shootFromPos.y - 20, 'Projectile-key');
-        const Projectile3 = new BugSpray_Projectile(this.scene, shootFromPos.x, shootFromPos.y + 20, 'Projectile-key');
+        const Projectile1 = new BugSpray_Projectile(this.scene, shootFromPos.x, shootFromPos.y, 'Projectile-key', BUG_SPRAY_DAMAGE, KNOCKBACK_STRENGTH, STUN_STRENGTH);
+        const Projectile2 = new BugSpray_Projectile(this.scene, shootFromPos.x, shootFromPos.y - 20, 'Projectile-key', BUG_SPRAY_DAMAGE, KNOCKBACK_STRENGTH, STUN_STRENGTH);
+        const Projectile3 = new BugSpray_Projectile(this.scene, shootFromPos.x, shootFromPos.y + 20, 'Projectile-key', BUG_SPRAY_DAMAGE, KNOCKBACK_STRENGTH, STUN_STRENGTH);
         
         //add to store
         this.scene.damageEntityStore.addProjectile(Projectile1);

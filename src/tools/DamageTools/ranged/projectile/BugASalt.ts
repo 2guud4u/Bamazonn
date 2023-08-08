@@ -4,8 +4,8 @@ const damage: number = 10;
 export default class BugASalt extends Projectile{
     
     private growthRate: number = 0.002;
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
-        super(scene, x, y, texture, 900, damage);
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string, KnockbackStrength: number, StunStrength: number) {
+        super(scene, x, y, texture, 900, damage, KnockbackStrength, StunStrength);
         this.setScale(.2);
         
         

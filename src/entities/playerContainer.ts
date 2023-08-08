@@ -1,8 +1,8 @@
 import Phaser from "phaser";
-import Player from "./player";
+
 import {Weapon} from '../tools/ToolStates/Weapon';
 import Projectile from '../tools/DamageTools/ranged/projectile/projectile';
-import fireProjectile from '../tools/DamageTools/ranged/projectile/spawnProjectiles';
+
 import CandyCane from '../tools/DamageTools/melee/candyCane';
 import Tool from "../tools/Tool";
 import HelloWorldScene from "../scenes/HelloWorldScene";

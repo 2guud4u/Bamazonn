@@ -4,8 +4,9 @@ import Projectile from "./projectile";
 export default class BugSpray_Projectile extends Projectile{
     private growthRate: number = 0.001;
     private stationaryTime: number = 0;
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
-        super(scene, x, y, texture, 400, 1);
+
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string, damage: number, knockbackStrength: number, stunStrength: number) {
+        super(scene, x, y, texture,400 , damage, knockbackStrength, stunStrength );
         this.setScale(.4);
         
         

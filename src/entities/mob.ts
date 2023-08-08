@@ -8,7 +8,9 @@ export default class Mob extends phaser.Physics.Arcade.Sprite {
     private stun: boolean = false;
     public body!: Phaser.Physics.Arcade.Body;
     private stunResist!: number;
-    constructor(scene: phaser.Scene, x: number, y: number, texture: string, health: number, attackDamage: number, stunResist: number) { 
+    private KnockbackStrength!: number;
+    private StunStrength!: number;
+    constructor(scene: phaser.Scene, x: number, y: number, texture: string, health: number, attackDamage: number, stunResist: number, KnockbackStrength: number, StunStrength: number) { 
         super(scene, x, y, texture);
         this.scene.physics.add.existing(this);
         
@@ -35,6 +37,8 @@ export default class Mob extends phaser.Physics.Arcade.Sprite {
         this.health = health;
         this.attackDamage = attackDamage;
         this.stunResist = stunResist;
+        this.KnockbackStrength = KnockbackStrength;
+        this.StunStrength = StunStrength;
     }
     public damaged(damage: number){
         if(this.health <= 1){
@@ -71,5 +75,11 @@ export default class Mob extends phaser.Physics.Arcade.Sprite {
     }
     public getStunResist(){
         return this.stunResist;
+    }
+    public getKnockback(){
+        return this.KnockbackStrength;
+    }
+    public getStunStrength(){
+        return this.StunStrength;
     }
 }
