@@ -59,10 +59,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
           runChildUpdate: true,
         });
         
-        //add candy cane
-        // this.cane = new CandyCane(this.scene, 20, 0, 'candy-cane');
-        // this.cane.body.setAllowGravity(false);
-        // this.add(this.cane);
+       
         
         this.scene.input.on('pointermove', (pointer:Phaser.Input.Pointer) => {
           // Calculate the angle between the player and the world x/y of the mouse, and offset it by Pi/2
@@ -70,11 +67,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
           
           
         });
-        // this.scene.input.on('pointerdown', (pointer:Phaser.Input.Pointer) => {
-        //   if(this.inHand instanceof CandyCane)
-        //     this.inHand.stab(this.pointer.position, this.aimAngle, this.body.position);
-        //     //this.cane.stab(this.pointer.position, this.aimAngle, this.body.position);
-        //   });
+      
         //make cur weapon fist
         this.inHand=scene.toolsDict.get(this.hotbar[this.equipment_ind])
         

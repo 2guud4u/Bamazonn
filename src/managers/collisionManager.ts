@@ -64,12 +64,13 @@ function takeDamage(victim: PlayerContainer|Mob, attacker: projectile | AttackBo
 function knockBack(victim: PlayerContainer | Mob, attacker: projectile | AttackBox | Mob) {
     let knockback = (attacker.getKnockback()-victim.getStunResist() > 0) ? attacker.getKnockback()-victim.getStunResist() : 0;
     let stun = (attacker.getStunStrength()-victim.getStunResist() > 0) ? attacker.getStunStrength()-victim.getStunResist() : 0;
-    console.log(knockback, stun)
+ 
     victim.setStun(true);
-    if(victim.body.touching.left && victim.x-attacker.x > 0){  
+    // calculate knockback direction
+    if( victim.x-attacker.x > 0){  
         victim.body.setVelocityX(knockback) ;
     }
-    else if(victim.body.touching.right && victim.x-attacker.x < 0){
+    else if( victim.x-attacker.x < 0){
         victim.body.setVelocityX(-knockback);
     }
 
