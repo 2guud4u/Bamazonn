@@ -3,14 +3,11 @@ import Melee from "./Melee";
 import HelloWorldScene from "../../../scenes/HelloWorldScene";
 import { time } from "console";
 
-const FIST_DAMAGE = 1;
-const FIRE_RATE = 300;
-const STUN_STRENGTH = 100;
-const KNOCKBACK_STRENGTH = 100;
+import {Fist_Stat} from "../../../constants/entityConst";
 export default class Fist extends Melee {
     body: Phaser.Physics.Arcade.Body;
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
-        super(scene, x, y, texture, FIST_DAMAGE, FIRE_RATE, KNOCKBACK_STRENGTH, STUN_STRENGTH);
+        super(scene, x, y, texture, Fist_Stat);
         this.scene = scene as HelloWorldScene;  
         this.setScale(.5, .5);
         this.scene.add.existing(this);

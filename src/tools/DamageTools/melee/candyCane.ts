@@ -2,16 +2,13 @@ import Phaser from "phaser";
 import Melee from "./Melee";
 import HelloWorldScene from "../../../scenes/HelloWorldScene";
 import { time } from "console";
-const CANDY_CANE_DAMAGE = 10;
-const FIRE_RATE = 700;
-const STUN_STRENGTH = 120;
-const KNOCKBACK_STRENGTH = 750;
+import {CandyCane_Stats} from "../../../constants/entityConst";
 export default class CandyCane extends Melee{
     body!: Phaser.Physics.Arcade.Body;
     scene!: HelloWorldScene;
    
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
-        super(scene, x, y, texture, CANDY_CANE_DAMAGE, FIRE_RATE, KNOCKBACK_STRENGTH, STUN_STRENGTH);
+        super(scene, x, y, texture, CandyCane_Stats);
 
         this.scene = scene as HelloWorldScene;
         this.setScale(.5, 6);
