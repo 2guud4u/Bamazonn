@@ -2,16 +2,13 @@ import Phaser from "phaser";
 import Ranged from "./Ranged";
 import HelloWorldScene from "../../../scenes/HelloWorldScene";
 import BugASalt from "./projectile/BugASalt";
-const BUGASALT_DAMAGE = 1;
-const FIRE_RATE = 1000;
-const STUN_STRENGTH = 150;
-const KNOCKBACK_STRENGTH = 700;
+import {BugASalt_Stats} from "../../../constants/entityConst";
 export default class BugAsalt extends Ranged {
     body: Phaser.Physics.Arcade.Body;
     scene: HelloWorldScene
     
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
-        super(scene, x, y, texture, BUGASALT_DAMAGE, FIRE_RATE, KNOCKBACK_STRENGTH, STUN_STRENGTH);
+        super(scene, x, y, texture, BugASalt_Stats.FIRE_RATE);
         this.scene = scene as HelloWorldScene;
         this.setScale(1, 4);
         this.scene.add.existing(this);
@@ -23,10 +20,10 @@ export default class BugAsalt extends Ranged {
     }
     public shoot(timeSinceLastFire: number, shootToPos: {x:number, y:number}, shootFromPos: {x:number, y:number}){
         
-        if (this.scene.time.now- timeSinceLastFire  < FIRE_RATE) {
+        if (this.scene.time.now- timeSinceLastFire  < BugASalt_Stats.FIRE_RATE) {
             return timeSinceLastFire;
         }
-            const Projectile1 = new BugASalt(this.scene, shootFromPos.x, shootFromPos.y, 'Projectile-key', KNOCKBACK_STRENGTH, STUN_STRENGTH);
+            const Projectile1 = new BugASalt(this.scene, shootFromPos.x, shootFromPos.y, 'Projectile-key');
     
             
             this.scene.damageEntityStore.addProjectile(Projectile1);

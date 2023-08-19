@@ -27,6 +27,7 @@ export function entitiesToMelee(scene: Phaser.Scene, melee: Phaser.Physics.Arcad
 }
 
 export function entitiesToProjectile(scene: Phaser.Scene, Projectiles: Phaser.Physics.Arcade.Group, mobs: Phaser.Physics.Arcade.Group){
+   
     scene.physics.add.collider(Projectiles, mobs , handleEntityProjectile as Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, undefined, undefined);
 }
 

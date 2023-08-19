@@ -1,11 +1,11 @@
 import Phaser from "phaser";
 import Projectile from "./projectile";
-const damage: number = 10;
+import {BugASalt_Stats} from "../../../../constants/entityConst";
 export default class BugASalt extends Projectile{
-    
+     
     private growthRate: number = 0.002;
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string, KnockbackStrength: number, StunStrength: number) {
-        super(scene, x, y, texture, 900, damage, KnockbackStrength, StunStrength);
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
+        super(scene, x, y, texture, BugASalt_Stats);
         this.setScale(.2);
         
         
