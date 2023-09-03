@@ -11,7 +11,7 @@ export default class bugSpray extends Ranged {
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
         super(scene, x, y, texture,  BugSpray_Stats.FIRE_RATE);
         this.scene = scene as HelloWorldScene;
-        this.setScale(1,2);
+        this.setScale(1);
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         this.body.enable = false;

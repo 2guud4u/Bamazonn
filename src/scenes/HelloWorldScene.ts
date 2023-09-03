@@ -32,12 +32,16 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.load.image('tiles', 'assets/tilesets/platformPack_tilesheet.png');
     this.damageEntityStore = new damageEntityStore(this);
     this.toolsDict = new Map();
-    loadAssets(this);
+    this.load.image("player-key", "assets/entitySprites/player.png");
+    this.load.image("mosquito", "assets/entitySprites/mosquito.png");
+    this.load.image("candycane", "assets/toolSprites/candycane.png");
+    this.load.image("bugspray", "assets/toolSprites/bugSpray.png");
+    
   }
 
   create() {
     //make map
-    
+    loadAssets(this);
     const map = this.make.tilemap({ key: 'map' });
     const tileset = map.addTilesetImage('tileset', 'tiles');
     this.platforms = map.createLayer('top', tileset, 10,250);
@@ -46,7 +50,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     
     
-    
+   
     this.playerContainer = new PlayerContainer(this, 100, 450);
     this.mobs = this.physics.add.group(
       {

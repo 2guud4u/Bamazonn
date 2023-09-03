@@ -21,7 +21,7 @@ export default class Mosquito extends Mob {
         const moveSpeed = 100; // Adjust the movement speed as desired
 
         const targetX = playerPosition.x;
-        const targetY = playerPosition.y - this.height/2;
+        const targetY = playerPosition.y ;
 
         // // Calculate the direction from the current position to the target position
         const directionX = targetX - this.x;

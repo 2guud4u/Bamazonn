@@ -8,10 +8,10 @@ export default class CandyCane extends Melee{
     scene!: HelloWorldScene;
    
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
-        super(scene, x, y, texture, CandyCane_Stats);
+        super(scene, x, y, "candycane", CandyCane_Stats);
 
         this.scene = scene as HelloWorldScene;
-        this.setScale(.5, 6);
+        this.setScale(1.5);
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         this.body.enable = false;
@@ -26,7 +26,7 @@ export default class CandyCane extends Melee{
         
         this.getBottomCenter(coord,true);
        
-        
+        texture = "candycane"
         this.attackbox.body.setSize(1)
         //this.scene.damageEntityStore.addAttackbox(this.attackbox)
         

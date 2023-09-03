@@ -28,49 +28,51 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     private stun: boolean = false;
     private stunResist: number = 100;
     constructor(scene: HelloWorldScene, x: number, y: number) {
-        super(scene, x, y);
+      super(scene, x, y);
 
-        this.scene = scene;
-        scene.add.existing(this);
-        scene.physics.world.enable(this);
-        //this.body.setAllowGravity(false);
-
-        
-        
-
-        this.body.setCollideWorldBounds(true);
-
-        //set up player controls
-        this.cursors = this.scene.input.keyboard.addKeys({
-          up: Phaser.Input.Keyboard.KeyCodes.W,
-          left: Phaser.Input.Keyboard.KeyCodes.A,
-          right: Phaser.Input.Keyboard.KeyCodes.D,
-          swap: Phaser.Input.Keyboard.KeyCodes.Q
-        });
-        this.pointer = this.scene.input.mousePointer; 
-        
-
-        //add player to container
-        this.box = this.scene.add.sprite( 0, 0, 'player-key');
-        this.add(this.box);
-
-        this.Projectiles = scene.physics.add.group({
-          classType: Projectile,
-          runChildUpdate: true,
-        });
-        
-       
-        
-        this.scene.input.on('pointermove', (pointer:Phaser.Input.Pointer) => {
-          // Calculate the angle between the player and the world x/y of the mouse, and offset it by Pi/2
-          this.aimAngle = (Phaser.Math.Angle.Between(this.body.x, this.body.y, pointer.x, pointer.y) - Math.PI / 2);
-          
-          
-        });
+      this.scene = scene;
+      scene.add.existing(this);
+      scene.physics.world.enable(this);
       
-        //make cur weapon fist
-        this.inHand=scene.toolsDict.get(this.hotbar[this.equipment_ind])
+
+      
+      
+      //set up player body and image
+      this.body.setCollideWorldBounds(true);
+      this.body.setSize(40, 90);
+
+      //set up player controls
+      this.cursors = this.scene.input.keyboard.addKeys({
+        up: Phaser.Input.Keyboard.KeyCodes.W,
+        left: Phaser.Input.Keyboard.KeyCodes.A,
+        right: Phaser.Input.Keyboard.KeyCodes.D,
+        swap: Phaser.Input.Keyboard.KeyCodes.Q
+      });
+      this.pointer = this.scene.input.mousePointer; 
+      
+
+      //add player to container
+      this.box = this.scene.add.sprite( 20, 40, 'player-key');
+      this.add(this.box);
+      this.box.setScale(.4);
+
+      this.Projectiles = scene.physics.add.group({
+        classType: Projectile,
+        runChildUpdate: true,
+      });
+      
+      
+      
+      this.scene.input.on('pointermove', (pointer:Phaser.Input.Pointer) => {
+        // Calculate the angle between the player and the world x/y of the mouse, and offset it by Pi/2
+        this.aimAngle = (Phaser.Math.Angle.Between(this.body.x, this.body.y, pointer.x, pointer.y) - Math.PI / 2);
         
+        
+      });
+    
+      //make cur weapon fist
+      this.inHand=scene.toolsDict.get(this.hotbar[this.equipment_ind])
+      
         
       }
     
@@ -138,7 +140,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     }
     private equip(){
       this.inHand = this.scene.toolsDict.get(this.hotbar[this.equipment_ind])!;
-      this.add(this.inHand);
+      this.add(this.inHand );
       this.inHand.setVisible(true);
       console.log(this.inHand.constructor.name)
     }

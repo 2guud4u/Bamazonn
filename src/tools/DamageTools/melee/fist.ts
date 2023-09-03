@@ -51,9 +51,9 @@ export default class Fist extends Melee {
                      
                 },
                 onComplete: () => {
-                    this.attackbox.x = -1000
-                    this.attackbox.enableBody(false)
-                    this.scene.physics.world.remove(this.attackbox.body);
+                    this.attackbox.setPosition(-1000,-1000) 
+                    
+                    
                 },
                 
                 duration: 200,
