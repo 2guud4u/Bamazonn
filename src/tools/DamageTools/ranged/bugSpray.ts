@@ -11,7 +11,7 @@ export default class bugSpray extends Ranged {
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
         super(scene, x, y, texture,  BugSpray_Stats.FIRE_RATE);
         this.scene = scene as HelloWorldScene;
-        this.setScale(1);
+        this.setScale(.5);
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         this.body.enable = false;
@@ -22,9 +22,9 @@ export default class bugSpray extends Ranged {
         if (this.scene.time.now- timeSinceLastFire  < BugSpray_Stats.FIRE_RATE) {
             return timeSinceLastFire;
         }
-        const Projectile1 = new BugSpray_Projectile(this.scene, shootFromPos.x, shootFromPos.y, 'Projectile-key');
-        const Projectile2 = new BugSpray_Projectile(this.scene, shootFromPos.x, shootFromPos.y - 20, 'Projectile-key');
-        const Projectile3 = new BugSpray_Projectile(this.scene, shootFromPos.x, shootFromPos.y + 20, 'Projectile-key');
+        const Projectile1 = new BugSpray_Projectile(this.scene, shootFromPos.x, shootFromPos.y, 'sprayCloud');
+        const Projectile2 = new BugSpray_Projectile(this.scene, shootFromPos.x, shootFromPos.y - 20, 'sprayCloud');
+        const Projectile3 = new BugSpray_Projectile(this.scene, shootFromPos.x, shootFromPos.y + 20, 'sprayCloud');
         
         //add to store
         this.scene.damageEntityStore.addProjectile(Projectile1);

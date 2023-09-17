@@ -24,11 +24,13 @@ export function entitiesToPlayer(scene: Phaser.Scene, player:PlayerContainer, mo
 export function entitiesToMelee(scene: Phaser.Scene, melee: Phaser.Physics.Arcade.Group ,mobs: Phaser.Physics.Arcade.Group){
     
     scene.physics.add.collider(melee, mobs , handleEntityMelee as Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, undefined, undefined);
+    scene.physics.add.overlap(melee, mobs , handleEntityMelee as Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, undefined, undefined);
 }
 
 export function entitiesToProjectile(scene: Phaser.Scene, Projectiles: Phaser.Physics.Arcade.Group, mobs: Phaser.Physics.Arcade.Group){
    
     scene.physics.add.collider(Projectiles, mobs , handleEntityProjectile as Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, undefined, undefined);
+    scene.physics.add.overlap(Projectiles, mobs , handleEntityProjectile as Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, undefined, undefined);
 }
 
 export function envToEntities(scene: Phaser.Scene, mobs: Phaser.Physics.Arcade.Group, env: Phaser.Tilemaps.TilemapLayer){

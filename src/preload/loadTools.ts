@@ -14,8 +14,8 @@ export default function loadAssets(scene: HelloWorldScene) {
 function loadWeapons(scene: HelloWorldScene){
     //scene.load.image("candycane", "assets/toolSprites/candycane.png");
     scene.toolsDict.set(Weapon.CandyCane,new CandyCane(scene, 50, 50, "candycane"));
-    scene.toolsDict.set(Weapon.BugSpray, new bugSpray(scene, 20, 0, 'bugspray'));
-    scene.toolsDict.set(Weapon.BugASalt, new BugASalt(scene, 20, 0, 'bug-a-salt'));
+    scene.toolsDict.set(Weapon.BugSpray, new bugSpray(scene, 50, 50, 'bugspray'));
+    scene.toolsDict.set(Weapon.BugASalt, new BugASalt(scene, 25, 50, 'bug-a-salt'));
     scene.toolsDict.set(Weapon.Fist, new Fist(scene, 0, 0, 'fist'));
 }
 

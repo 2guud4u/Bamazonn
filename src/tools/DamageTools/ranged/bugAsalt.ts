@@ -10,11 +10,11 @@ export default class BugAsalt extends Ranged {
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
         super(scene, x, y, texture, BugASalt_Stats.FIRE_RATE);
         this.scene = scene as HelloWorldScene;
-        this.setScale(1, 4);
+        this.setScale(1);
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         this.body.enable = false;
-        this.body.setSize(2);
+        this.body.setSize(1);
         this.body.setAllowGravity(false);
         
     }
@@ -23,7 +23,7 @@ export default class BugAsalt extends Ranged {
         if (this.scene.time.now- timeSinceLastFire  < BugASalt_Stats.FIRE_RATE) {
             return timeSinceLastFire;
         }
-            const Projectile1 = new BugASalt(this.scene, shootFromPos.x, shootFromPos.y, 'Projectile-key');
+            const Projectile1 = new BugASalt(this.scene, shootFromPos.x, shootFromPos.y, 'salt');
     
             
             this.scene.damageEntityStore.addProjectile(Projectile1);

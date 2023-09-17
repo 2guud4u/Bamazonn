@@ -6,7 +6,7 @@ export default class BugASalt extends Projectile{
     private growthRate: number = 0.002;
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
         super(scene, x, y, texture, BugASalt_Stats);
-        this.setScale(.2);
+        this.setScale(1);
         
         
         
@@ -27,7 +27,7 @@ export default class BugASalt extends Projectile{
         
     }
     private spread(){
-        if(this && this.active && this.scaleX < 1){
+        if(this && this.active && this.scaleX < 2){
             const newScale = this.scaleX + (this.growthRate * this.scene.sys.game.loop.delta);
             this.setScale(newScale);
         } else{

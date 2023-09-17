@@ -36,7 +36,10 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.load.image("mosquito", "assets/entitySprites/mosquito.png");
     this.load.image("candycane", "assets/toolSprites/candycane.png");
     this.load.image("bugspray", "assets/toolSprites/bugSpray.png");
-    
+    this.load.image("bug-a-salt", "assets/toolSprites/bug-a-salt.png");
+    this.load.image("sprayCloud", "assets/toolSprites/sprayCloud.png");
+    this.load.image("salt", "assets/toolSprites/salt.png");
+    this.load.image("bear", "assets/entitySprites/bear.png");
   }
 
   create() {
